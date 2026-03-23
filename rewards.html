@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rewards Store - Digital Earner</title>
+    <link rel="icon" href="logo.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #eef1f7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            animation: fadeSlideUp 1s ease-out;
+        }
+
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body.menu-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        .header-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .header-bg {
+            background: #e0e5ec;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 20px;
+            height: 70px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .brand-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e40af;
+            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            white-space: nowrap;
+        }
+
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #4f46e5;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 3;
+            padding: 0;
+        }
+
+        .menu-btn:active {
+            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: none;
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            background: #e0e5ec;
+            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            padding: 20px 15px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 25px 0 0 25px;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .menu-container.active {
+            right: 0;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu-box {
+            background: #e0e5ec;
+            border-radius: 12px;
+            padding: 10px 15px;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            transition: 0.3s;
+        }
+
+        .menu-box.digital-box {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .digital-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e67e22;
+            text-shadow: 2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff;
+            white-space: nowrap;
+        }
+
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #ef4444;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .close-btn:active {
+            box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+        }
+
+        .menu-link {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+            text-decoration: none;
+            padding: 8px 5px;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .menu-link:hover {
+            color: #e67e22;
+            padding-left: 15px;
+            background: #f0f3ff;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin: 25px 0 15px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 0 20px 25px 20px;
+        }
+        
+        .product-card {
+            background: #e0e5ec;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff;
+            transition: 0.3s;
+        }
+        
+        .product-card:active {
+            box-shadow: inset 8px 8px 15px #a3b1c6, inset -8px -8px 15px #ffffff;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 120px;
+            background: #e0e5ec;
+            border-radius: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #1e40af;
+            box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+        
+        .product-desc {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        
+        .task-requirement {
+            background: #1e40af;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 12px 0;
+            text-align: center;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .claim-btn {
+            background: #e0e5ec;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            width: 100%;
+            color: #1e40af;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        
+        .claim-btn:active {
+            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+        }
+        
+        .claim-btn.clicked {
+            animation: btnPop 0.3s ease;
+        }
+        
+        @keyframes btnPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff; }
+            100% { transform: scale(1); }
+        }
+        
+        .featured-product {
+            background: linear-gradient(145deg, #1e40af, #4f46e5);
+            border-radius: 25px;
+            padding: 25px;
+            margin: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #ffffff;
+        }
+        
+        .featured-image {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        
+        .featured-info h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .featured-info p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .featured-task {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 12px;
+            width: fit-content;
+        }
+        
+        .offer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px;
+        }
+        
+        .offer-card {
+            background: #e0e5ec;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+        }
+        
+        .offer-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        
+        .offer-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .offer-desc {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        
+        .offer-task {
+            background: #10b981;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 10px 0;
+            text-align: center;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .claim-offer-btn {
+            background: #e0e5ec;
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            width: 100%;
+            color: #1e40af;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            transition: 0.2s;
+        }
+        
+        .claim-offer-btn:active {
+            box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+        }
+        
+        .reward-popup {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e40af;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            text-align: center;
+            border-left: 5px solid #10b981;
+            white-space: normal;
+            word-break: break-word;
+            transform: translateY(20px);
+        }
+        
+        .reward-popup.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .reward-popup span {
+            color: #10b981;
+            font-size: 20px;
+            margin-right: 8px;
+        }
+        
+        .footer {
+            background: #0f172a;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 18px 20px;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="menu-container" id="menu">
+    <div class="menu-items">
+        <div class="menu-box digital-box">
+            <span class="digital-title">Digital Earner</span>
+            <button class="close-btn" onclick="closeMenuOnly()">✕</button>
+        </div>
+        
+        <div class="menu-box" style="background:#4f46e5; color:white;" onclick="goToDashboard()">
+            <span class="menu-link" style="color:white;">← Back to Dashboard</span>
+        </div>
+        
+        <div class="menu-box">
+            <a href="index.html" class="menu-link">🏠 Home</a>
+        </div>
+        <div class="menu-box">
+            <a href="about.html" class="menu-link">📖 About Us</a>
+        </div>
+        <div class="menu-box">
+            <a href="https://wa.me/917217392800" class="menu-link" target="_blank">📞 Contact</a>
+        </div>
+        <div class="menu-box">
+            <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
+        </div>
+    </div>
+</div>
+
+<div class="header-container">
+    <div class="header-bg"></div>
+    <div class="header-content">
+        <div class="header-left">
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <span class="brand-text">Digital Earner</span>
+        </div>
+        <button class="menu-btn" onclick="openMenuOnly()">☰</button>
+    </div>
+</div>
+
+<div class="featured-product">
+    <div class="featured-image">
+        <img src="airpods.jpg" alt="AirPods Pro" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+    </div>
+    <div class="featured-info">
+        <h3>🔥 AirPods Pro</h3>
+        <p>Wireless, Noise Cancellation, Spatial Audio</p>
+        <div class="featured-task">Complete 50 tasks this month</div>
+    </div>
+</div>
+
+<div class="section-title">✨ Best Rewards This Month ✨</div>
+
+<div class="products-grid">
+    <div class="product-card">
+        <div class="product-image">
+            <img src="mouse.jpg" alt="Gaming Mouse" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+        </div>
+        <div class="product-title">Gaming Mouse</div>
+        <div class="product-desc">RGB, 6400 DPI, 6 Buttons</div>
+        <div class="task-requirement">Complete 10 tasks this month</div>
+        <button class="claim-btn" data-reward="Gaming Mouse" data-req="10">Claim</button>
+    </div>
+    
+    <div class="product-card">
+        <div class="product-image">
+            <img src="watch.jpg" alt="Smart Watch" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+        </div>
+        <div class="product-title">Smart Watch</div>
+        <div class="product-desc">Heart Rate, Steps, Sleep Tracker</div>
+        <div class="task-requirement">Complete 12 tasks this month</div>
+        <button class="claim-btn" data-reward="Smart Watch" data-req="12">Claim</button>
+    </div>
+    
+    <div class="product-card">
+        <div class="product-image">
+            <img src="headphone.jpg" alt="Headphones" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+        </div>
+        <div class="product-title">Wireless Headphones</div>
+        <div class="product-desc">Over-ear, Deep Bass, 30hr Battery</div>
+        <div class="task-requirement">Complete 14 tasks this month</div>
+        <button class="claim-btn" data-reward="Wireless Headphones" data-req="14">Claim</button>
+    </div>
+    
+    <div class="product-card">
+        <div class="product-image">
+            <img src="amazon.jpg" alt="Amazon Gift Card" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+        </div>
+        <div class="product-title">Amazon Gift Card</div>
+        <div class="product-desc">₹500 Value • Shop Anything</div>
+        <div class="task-requirement">Complete 5 tasks this month</div>
+        <button class="claim-btn" data-reward="Amazon Gift Card" data-req="5">Claim</button>
+    </div>
+    
+    <div class="product-card">
+        <div class="product-image">
+            <img src="flipkart.jpg" alt="Flipkart Voucher" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+        </div>
+        <div class="product-title">Flipkart Voucher</div>
+        <div class="product-desc">₹400 Off • Minimum Purchase</div>
+        <div class="task-requirement">Complete 6 tasks this month</div>
+        <button class="claim-btn" data-reward="Flipkart Voucher" data-req="6">Claim</button>
+    </div>
+    
+    <div class="product-card">
+        <div class="product-image">
+            <img src="speaker.jpg" alt="Bluetooth Speaker" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+        </div>
+        <div class="product-title">Bluetooth Speaker</div>
+        <div class="product-desc">Portable, 10W, LED Lights</div>
+        <div class="task-requirement">Complete 8 tasks this month</div>
+        <button class="claim-btn" data-reward="Bluetooth Speaker" data-req="8">Claim</button>
+    </div>
+    
+    <div class="product-card">
+        <div class="product-image">
+            <img src="powerbank.jpg" alt="Power Bank" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+        </div>
+        <div class="product-title">Power Bank</div>
+        <div class="product-desc">10000mAh, Fast Charging</div>
+        <div class="task-requirement">Complete 7 tasks this month</div>
+        <button class="claim-btn" data-reward="Power Bank" data-req="7">Claim</button>
+    </div>
+    
+    <div class="product-card">
+        <div class="product-image">
+            <img src="earbuds.jpg" alt="TWS Earbuds" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+        </div>
+        <div class="product-title">TWS Earbuds</div>
+        <div class="product-desc">Bluetooth 5.3, 20hrs Battery</div>
+        <div class="task-requirement">Complete 9 tasks this month</div>
+        <button class="claim-btn" data-reward="TWS Earbuds" data-req="9">Claim</button>
+    </div>
+</div>
+
+<div class="section-title">🎯 Special Offers</div>
+
+<div class="offer-grid">
+    <div class="offer-card">
+        <div class="offer-icon">🔥</div>
+        <div class="offer-title">Double Rewards</div>
+        <div class="offer-desc">Get 2x value on next claim</div>
+        <div class="offer-task">Complete 10 tasks this month</div>
+        <button class="claim-offer-btn" data-reward="Double Rewards" data-req="10">Claim</button>
+    </div>
+    <div class="offer-card">
+        <div class="offer-icon">⚡</div>
+        <div class="offer-title">Early Bird Bonus</div>
+        <div class="offer-desc">Extra gift on first 5 tasks</div>
+        <div class="offer-task">Complete 5 tasks this month</div>
+        <button class="claim-offer-btn" data-reward="Early Bird Bonus" data-req="5">Claim</button>
+    </div>
+</div>
+
+<div class="reward-popup" id="rewardPopup">
+    <span>🎯</span> <span id="popupMessage"></span>
+</div>
+
+<div class="footer">
+    <p>© 2026 Digital Earner · All rights reserved</p>
+</div>
+
+<script>
+    function openMenuOnly() {
+        document.getElementById('menu').classList.add('active');
+        document.getElementById('overlay').classList.add('active');
+        document.body.classList.add('menu-open');
+        document.body.style.top = `-${window.scrollY}px`;
+    }
+
+    function closeMenuOnly() {
+        document.getElementById('menu').classList.remove('active');
+        document.getElementById('overlay').classList.remove('active');
+        document.body.classList.remove('menu-open');
+        const scrollY = document.body.style.top;
+        document.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
+
+    function goToDashboard() {
+        window.location.href = "dashboard.html";
+    }
+
+    function showPopup(message) {
+        const popup = document.getElementById('rewardPopup');
+        const msgSpan = document.getElementById('popupMessage');
+        msgSpan.textContent = message;
+        popup.classList.add('show');
+        
+        setTimeout(() => {
+            popup.classList.remove('show');
+        }, 3000);
+    }
+    
+    document.querySelectorAll('.claim-btn, .claim-offer-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            this.classList.add('clicked');
+            setTimeout(() => {
+                this.classList.remove('clicked');
+            }, 300);
+            
+            const reward = this.getAttribute('data-reward') || 'this reward';
+            const required = this.getAttribute('data-req') || 'some';
+            
+            const messages = [
+                `🎯 Keep going! Complete ${required} tasks to claim ${reward}!`,
+                `✨ You're almost there! Just ${required} more tasks needed!`,
+                `💪 ${required} tasks required - Keep sharing your link!`,
+                `🎁 Complete ${required} tasks this month to unlock ${reward}!`,
+                `⚡ Share with friends - ${required} tasks needed for ${reward}!`
+            ];
+            
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            showPopup(randomMsg);
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Dashboard - Digital Earner</title>
+    <link rel="icon" href="logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f3f4f6, #eef2ff);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            animation: fadeSlideUp 0.8s ease-out;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        .header-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .header-bg {
+            background: #e0e5ec;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 20px;
+            height: 70px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .brand-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e40af;
+            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            white-space: nowrap;
+        }
+
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #4f46e5;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .menu-btn:active {
+            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: none;
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            background: #e0e5ec;
+            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            padding: 20px 15px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 25px 0 0 25px;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .menu-container.active {
+            right: 0;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu-box {
+            background: #e0e5ec;
+            border-radius: 12px;
+            padding: 10px 15px;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            transition: 0.3s;
+        }
+
+        .menu-box.digital-box {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .digital-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e67e22;
+            text-shadow: 2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff;
+            white-space: nowrap;
+        }
+
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #ef4444;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .close-btn:active {
+            box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+        }
+
+        .menu-link {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+            text-decoration: none;
+            padding: 8px 5px;
+            border-radius: 6px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .menu-link:hover {
+            color: #e67e22;
+            padding-left: 15px;
+            background: #f0f3ff;
+        }
+
+        .admin-container {
+            max-width: 450px;
+            margin: 10px auto 20px;
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .profile-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 28px;
+            padding: 12px 16px 14px 16px;
+            box-shadow: 0 8px 18px -6px rgba(0,0,0,0.06);
+            border-left: 5px solid #4f46e5;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .profile-image-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .profile-image-border {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #4f46e5, #f59e0b, #4f46e5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+            box-shadow: 0 6px 15px -4px rgba(79,70,229,0.25);
+        }
+
+        .profile-image {
+            width: 61px;
+            height: 61px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e293b, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 3px;
+        }
+
+        .profile-email {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .profile-email span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #f1f5f9;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 10px;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .verified-badge {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .verified-badge span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            font-size: 8px;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        .divider {
+            margin: 6px 0 8px 0;
+            position: relative;
+        }
+
+        .divider-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e2e8f0, #cbd5e1, #e2e8f0, transparent);
+        }
+
+        .divider-dot {
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 4px;
+            background: #4f46e5;
+            border-radius: 4px;
+        }
+
+        .task-progress-title {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .task-progress-title div {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #eef2ff;
+            padding: 3px 12px;
+            border-radius: 30px;
+        }
+
+        .task-progress-title div span {
+            font-size: 11px;
+            font-weight: 700;
+            color: #4f46e5;
+        }
+
+        .pulse-dot {
+            width: 4px;
+            height: 4px;
+            background: #4f46e5;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        .stats-cards {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .stat-card {
+            flex: 1;
+            text-align: center;
+            padding: 6px 4px;
+            border-radius: 14px;
+        }
+
+        .stat-card.success {
+            background: linear-gradient(145deg, #f0fdf4, #dcfce7);
+        }
+
+        .stat-card.pending {
+            background: linear-gradient(145deg, #fffbeb, #fef3c7);
+        }
+
+        .stat-card.reject {
+            background: linear-gradient(145deg, #fef2f2, #fee2e2);
+        }
+
+        .stat-number {
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .stat-number.success { color: #10b981; }
+        .stat-number.pending { color: #f59e0b; }
+        .stat-number.reject { color: #ef4444; }
+
+        .stat-label {
+            font-size: 8px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .stat-label.success { color: #166534; }
+        .stat-label.pending { color: #92400e; }
+        .stat-label.reject { color: #991b1b; }
+
+        .stat-sub {
+            font-size: 7px;
+            color: #6b7280;
+            margin-top: 1px;
+        }
+
+        .task-progress-bar {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 28px;
+            padding: 16px 18px;
+            box-shadow: 0 10px 25px -8px rgba(0,0,0,0.06);
+            border-left: 5px solid #f59e0b;
+            margin-top: 5px;
+        }
+
+        .reward-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .reward-image {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f59e0b20, #ef444420);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid #f59e0b;
+        }
+
+        .reward-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .reward-info {
+            flex: 1;
+        }
+
+        .reward-badge {
+            font-size: 9px;
+            color: #f59e0b;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .reward-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .reward-target {
+            font-size: 10px;
+            color: #64748b;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .progress-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .progress-count {
+            font-size: 11px;
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        .progress-bar-bg {
+            background: #e2e8f0;
+            border-radius: 30px;
+            height: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #f59e0b, #ef4444);
+            border-radius: 30px;
+            transition: width 0.5s ease;
+        }
+
+        .milestones {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+        }
+
+        .milestone {
+            text-align: center;
+            flex: 1;
+        }
+
+        .milestone-circle {
+            width: 24px;
+            height: 24px;
+            background: #f1f5f9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 3px;
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .milestone-circle.reward {
+            width: 26px;
+            height: 26px;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .milestone-circle.reward img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .milestone-label {
+            font-size: 8px;
+            color: #64748b;
+        }
+
+        .milestone-label.reward {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .reward-hint {
+            margin-top: 10px;
+            padding: 6px;
+            background: #fef3c7;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .reward-hint span {
+            font-size: 10px;
+            color: #92400e;
+        }
+
+        .reward-message {
+            margin-top: 10px;
+            text-align: center;
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 8px;
+            border-radius: 16px;
+            display: none;
+        }
+
+        .reward-message-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .reward-message-icon {
+            font-size: 22px;
+        }
+
+        .reward-message-text {
+            text-align: left;
+        }
+
+        .reward-message-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .reward-message-sub {
+            font-size: 9px;
+            color: #f0fdf4;
+        }
+
+        .earning-card {
+            background: #e0e5ec;
+            border-radius: 18px;
+            padding: 20px 18px;
+            box-shadow: 8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .earning-card:nth-child(1) {
+            border-left: 5px solid #10b981;
+            border-right: 5px solid #10b981;
+        }
+
+        .earning-card:nth-child(2) {
+            border-left: 5px solid #8b5cf6;
+            border-right: 5px solid #8b5cf6;
+        }
+
+        .earning-card:nth-child(3) {
+            border-left: 5px solid #f59e0b;
+            border-right: 5px solid #f59e0b;
+        }
+
+        .earning-card:nth-child(4) {
+            border-left: 5px solid #ef4444;
+            border-right: 5px solid #ef4444;
+        }
+
+        .card-header {
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-size: 11px;
+            color: #475569;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .card-amount {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        .card-amount span {
+            font-size: 24px;
+            color: #000000;
+            margin-right: 3px;
+            font-weight: 800;
+        }
+
+        #loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            background: #e0e5ec;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff;
+        }
+
+        .loader div {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #1e40af;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+            z-index: 1000;
+            display: none;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { bottom: 0; opacity: 0; }
+            to { bottom: 20px; opacity: 1; }
+        }
+
+        .footer {
+            background: #0f172a;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 12px 20px;
+            margin-top: 20px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading">
+    <div class="loader"><div></div></div>
+</div>
+
+<div class="success-toast" id="successToast">✓ Updated successfully!</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="menu-container" id="menu">
+    <div class="menu-items">
+        <div class="menu-box digital-box">
+            <span class="digital-title">Digital Earner</span>
+            <button class="close-btn" onclick="closeMenuOnly()">✕</button>
+        </div>
+        <div class="menu-box" style="background:#4f46e5; color:white;" onclick="goToDashboard()">
+            <span class="menu-link" style="color:white;">← Back to Dashboard</span>
+        </div>
+        <div class="menu-box">
+            <a href="index.html" class="menu-link">🏠 Home</a>
+        </div>
+        <div class="menu-box">
+            <a href="about.html" class="menu-link">📖 About Us</a>
+        </div>
+        <div class="menu-box">
+            <span class="menu-link" onclick="window.open('https://wa.me/917217392800','_blank')">📞 Contact Us</span>
+        </div>
+        <div class="menu-box">
+            <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
+        </div>
+        <div class="menu-box">
+            <span class="menu-link" onclick="confirmLogout()">🚪 Logout</span>
+        </div>
+    </div>
+</div>
+
+<div class="header-container">
+    <div class="header-bg"></div>
+    <div class="header-content">
+        <div class="header-left">
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <span class="brand-text">Digital Earner</span>
+        </div>
+        <button class="menu-btn" onclick="openMenuOnly()">☰</button>
+    </div>
+</div>
+
+<div class="admin-container">
+    
+    <div class="profile-card">
+        <div class="profile-image-wrapper">
+            <div class="profile-image-border">
+                <div class="profile-image">
+                    <img id="userProfileImg" src="" alt="Profile" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:none;">
+                    <span id="userProfileInitial" style="display:flex; font-size:28px; color:#4f46e5;">👤</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-name" id="userName">Loading...</div>
+        
+        <div class="profile-email">
+            <span>📧 <span id="userEmail">loading...</span></span>
+        </div>
+        
+        <div class="verified-badge">
+            <span>✅ Verified</span>
+        </div>
+        
+        <div class="divider">
+            <div class="divider-line"></div>
+            <div class="divider-dot"></div>
+        </div>
+        
+        <div class="task-progress-title">
+            <div>
+                <div class="pulse-dot"></div>
+                <span>TASK PROGRESS</span>
+                <div class="pulse-dot"></div>
+            </div>
+        </div>
+        
+        <div class="stats-cards">
+            <div class="stat-card success">
+                <div class="stat-number success">9</div>
+                <div class="stat-label success">Successful</div>
+                <div class="stat-sub">Completed</div>
+            </div>
+            <div class="stat-card pending">
+                <div class="stat-number pending">2</div>
+                <div class="stat-label pending">Pending</div>
+                <div class="stat-sub">In Progress</div>
+            </div>
+            <div class="stat-card reject">
+                <div class="stat-number reject">1</div>
+                <div class="stat-label reject">Reject</div>
+                <div class="stat-sub">Review</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="earning-card">
+        <div class="card-header">
+            <div class="card-title">TODAY EARNINGS</div>
+        </div>
+        <div class="card-amount" id="todayEarn"><span>₹</span>0</div>
+    </div>
+    
+    <div class="earning-card">
+        <div class="card-header">
+            <div class="card-title">Last 7 DAYS EARNINGS</div>
+        </div>
+        <div class="card-amount" id="weekEarn"><span>₹</span>0</div>
+    </div>
+    
+    <div class="earning-card">
+        <div class="card-header">
+            <div class="card-title">Last Month Earning</div>
+        </div>
+        <div class="card-amount" id="monthEarn"><span>₹</span>0</div>
+    </div>
+    
+    <div class="earning-card">
+        <div class="card-header">
+            <div class="card-title">ALL TIME Earning</div>
+        </div>
+        <div class="card-amount" id="totalEarn"><span>₹</span>0</div>
+    </div>
+    
+    <div class="task-progress-bar">
+        <div class="reward-header">
+            <div class="reward-image">
+                <img src="airpods.jpg" alt="AirPods Pro">
+            </div>
+            <div class="reward-info">
+                <div class="reward-badge">REWARD UNLOCK</div>
+                <div class="reward-title">AirPods Pro</div>
+                <div class="reward-target">Complete 50 tasks to claim</div>
+            </div>
+        </div>
+        
+        <div>
+            <div class="progress-header">
+                <span class="progress-label">Your Progress</span>
+                <span class="progress-count"><span id="taskProgressCurrent">9</span>/<span id="taskProgressTarget">50</span> Tasks</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="taskProgressFill" style="width: 18%;"></div>
+            </div>
+        </div>
+        
+        <div class="milestones">
+            <div class="milestone">
+                <div class="milestone-circle">10</div>
+                <div class="milestone-label">Tasks</div>
+            </div>
+            <div class="milestone">
+                <div class="milestone-circle">20</div>
+                <div class="milestone-label">Tasks</div>
+            </div>
+            <div class="milestone">
+                <div class="milestone-circle">30</div>
+                <div class="milestone-label">Tasks</div>
+            </div>
+            <div class="milestone">
+                <div class="milestone-circle">40</div>
+                <div class="milestone-label">Tasks</div>
+            </div>
+            <div class="milestone">
+                <div class="milestone-circle reward">
+                    <img src="airpods.jpg" alt="🎧">
+                </div>
+                <div class="milestone-label reward">Reward</div>
+            </div>
+        </div>
+        
+        <div id="taskRewardHint" class="reward-hint">
+            <span>⭐ Complete <strong id="taskRemainingHint">41</strong> more tasks to unlock AirPods Pro!</span>
+        </div>
+        
+        <div id="taskRewardMessage" class="reward-message">
+            <div class="reward-message-content">
+                <div class="reward-message-icon">🏆</div>
+                <div class="reward-message-text">
+                    <div class="reward-message-title">Congratulations!</div>
+                    <div class="reward-message-sub">You unlocked AirPods Pro! 🎧</div>
+                    <div class="reward-message-hint">Reward will be sent to your registered address</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="footer">
+    © 2026 Digital Earner · All rights reserved
+</div>
+
+<script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    
+    const supabaseUrl = "https://yqxbwgxfhibbdkgglydw.supabase.co"
+    const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
+    const supabase = createClient(supabaseUrl, supabaseKey)
+    
+    const BUCKET_NAME = "profile-images"
+    const TARGET_TASKS = 50
+    
+    async function protectPage() {
+        const { data } = await supabase.auth.getSession()
+        if (!data.session) {
+            window.location.replace("login.html")
+        }
+        return data.session
+    }
+    
+    async function loadUserData() {
+        const session = await protectPage()
+        
+        if (session) {
+            const user = session.user
+            const email = user.email
+            const name = user.user_metadata?.full_name || email.split('@')[0]
+            
+            document.getElementById("userName").textContent = name
+            document.getElementById("userEmail").textContent = email
+            
+            await loadProfileImage(user.id)
+            loadEarnings()
+            updateTaskProgress()
+        }
+    }
+    
+    async function loadProfileImage(userId) {
+        try {
+            const { data, error } = await supabase
+                .storage
+                .from(BUCKET_NAME)
+                .download(`${userId}/profile.jpg`)
+            
+            if (data) {
+                const url = URL.createObjectURL(data)
+                const img = document.getElementById("userProfileImg")
+                const initial = document.getElementById("userProfileInitial")
+                img.src = url
+                img.style.display = "block"
+                initial.style.display = "none"
+            }
+        } catch (error) {
+            console.log("No profile image found")
+        }
+    }
+    
+    function updateTaskProgress() {
+        let completedTasks = parseInt(localStorage.getItem('userCompletedTasks')) || 9
+        const remainingTasks = TARGET_TASKS - completedTasks
+        const percent = (completedTasks / TARGET_TASKS) * 100
+        
+        document.getElementById('taskProgressCurrent').textContent = completedTasks
+        document.getElementById('taskRemainingHint').textContent = remainingTasks
+        document.getElementById('taskProgressFill').style.width = percent + '%'
+        
+        if (completedTasks >= TARGET_TASKS) {
+            document.getElementById('taskRewardMessage').style.display = 'block'
+            document.getElementById('taskRewardHint').style.display = 'none'
+        } else {
+            document.getElementById('taskRewardMessage').style.display = 'none'
+            document.getElementById('taskRewardHint').style.display = 'block'
+        }
+    }
+    
+    function loadEarnings() {
+        const today = Math.floor(Math.random() * 500) + 200
+        const week = Math.floor(Math.random() * 3000) + 1000
+        const month = Math.floor(Math.random() * 8000) + 3000
+        const total = Math.floor(Math.random() * 20000) + 8000
+        
+        animateCounter("todayEarn", today)
+        animateCounter("weekEarn", week)
+        animateCounter("monthEarn", month)
+        animateCounter("totalEarn", total)
+    }
+    
+    function animateCounter(elementId, target) {
+        const element = document.getElementById(elementId)
+        let current = 0
+        const steps = 80
+        const increment = target / steps
+        let step = 0
+        
+        const interval = setInterval(() => {
+            step++
+            current = Math.min(Math.ceil(increment * step), target)
+            element.innerHTML = '<span>₹</span>' + current.toLocaleString()
+            
+            if (step >= steps) {
+                clearInterval(interval)
+            }
+        }, 25)
+    }
+    
+    window.openMenuOnly = function() {
+        document.getElementById('menu').classList.add('active')
+        document.getElementById('overlay').classList.add('active')
+        document.body.classList.add('menu-open')
+        document.body.style.top = `-${window.scrollY}px`
+    }
+    
+    window.closeMenuOnly = function() {
+        document.getElementById('menu').classList.remove('active')
+        document.getElementById('overlay').classList.remove('active')
+        document.body.classList.remove('menu-open')
+        const scrollY = document.body.style.top
+        document.body.style.top = ''
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    }
+    
+    window.goToDashboard = function() {
+        window.location.href = 'dashboard.html'
+    }
+    
+    window.confirmLogout = async function() {
+        if (confirm("Are you sure you want to logout?")) {
+            await supabase.auth.signOut()
+            window.location.href = 'login.html'
+        }
+    }
+    
+    supabase.auth.onAuthStateChange((event, session) => {
+        if (!session) {
+            window.location.replace("login.html")
+        }
+    })
+    
+    loadUserData()
+</script>
+
+</body>
+</html>
