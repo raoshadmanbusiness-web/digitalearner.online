@@ -31,7 +31,7 @@ async function checkAuthAndRedirect() {
     console.log("No user logged in")
     
     if (!publicPages.includes(currentPage)) {
-      window.location.href = 'login.html'
+      window.location.href = 'index.html'
     }
   }
 }

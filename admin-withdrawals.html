@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin Withdrawals - Digital Earner</title>
+    <link rel="icon" href="logo.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f3f4f6, #eef2ff);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        .header-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .header-bg {
+            background: #e0e5ec;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 20px;
+            height: 70px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .brand-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e40af;
+            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            white-space: nowrap;
+        }
+
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #4f46e5;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: none;
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            background: #e0e5ec;
+            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            padding: 20px 15px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 25px 0 0 25px;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .menu-container.active {
+            right: 0;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu-box {
+            background: #e0e5ec;
+            border-radius: 12px;
+            padding: 10px 15px;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            transition: 0.3s;
+        }
+
+        .menu-box.digital-box {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .digital-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e67e22;
+            text-shadow: 2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff;
+            white-space: nowrap;
+        }
+
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #ef4444;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .menu-link {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+            text-decoration: none;
+            padding: 8px 5px;
+            border-radius: 6px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .admin-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 15px 20px;
+        }
+
+        .admin-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .tab {
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            background: #e2e8f0;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .tab.active {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .requests-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .request-item {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #f59e0b;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eef2ff;
+        }
+
+        .request-id {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .request-date {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-approved {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .status-rejected {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .request-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-top: 2px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .approve-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .reject-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .approve-btn:disabled, .reject-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .no-requests {
+            text-align: center;
+            padding: 50px;
+            color: #64748b;
+        }
+
+        .footer {
+            background: #0f172a;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 18px 20px;
+            margin-top: 30px;
+            font-size: 12px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 6px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="menu-container" id="menu">
+    <div class="menu-items">
+        <div class="menu-box digital-box">
+            <span class="digital-title">Digital Earner</span>
+            <button class="close-btn" onclick="closeMenuOnly()">✕</button>
+        </div>
+        <div class="menu-box" onclick="goToDashboard()">
+            <span class="menu-link">← Back to Dashboard</span>
+        </div>
+        <div class="menu-box">
+            <a href="index.html" class="menu-link">🏠 Home</a>
+        </div>
+        <div class="menu-box">
+            <a href="about.html" class="menu-link">📖 About Us</a>
+        </div>
+        <div class="menu-box">
+            <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
+        </div>
+        <div class="menu-box">
+            <span class="menu-link" onclick="confirmLogout()">🚪 Logout</span>
+        </div>
+    </div>
+</div>
+
+<div class="header-container">
+    <div class="header-bg"></div>
+    <div class="header-content">
+        <div class="header-left">
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <span class="brand-text">Digital Earner</span>
+        </div>
+        <button class="menu-btn" onclick="openMenuOnly()">☰</button>
+    </div>
+</div>
+
+<div class="admin-container">
+    <div class="admin-title">💰 Withdrawal Requests</div>
+    
+    <div class="tabs">
+        <div class="tab active" data-status="pending">Pending</div>
+        <div class="tab" data-status="approved">Approved</div>
+        <div class="tab" data-status="rejected">Rejected</div>
+    </div>
+    
+    <div id="requestsList" class="requests-list">
+        <div style="text-align: center; padding: 40px;">Loading requests...</div>
+    </div>
+</div>
+
+<div class="footer">
+    © 2026 Digital Earner · Admin Panel · All rights reserved
+</div>
+
+<script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    
+    const supabaseUrl = "https://yqxbwgxfhibbdkgglydw.supabase.co"
+    const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
+    const supabase = createClient(supabaseUrl, supabaseKey)
+    
+    const ADMIN_EMAIL = "digitalearner.business@gmail.com"
+    let currentStatus = 'pending'
+    
+    async function checkAdmin() {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) {
+            window.location.href = "login.html"
+            return false
+        }
+        if (user.email !== ADMIN_EMAIL) {
+            alert("Access denied. Admin only.")
+            window.location.href = "dashboard.html"
+            return false
+        }
+        return true
+    }
+    
+    async function loadRequests() {
+        const { data: requests, error } = await supabase
+            .from('withdrawal_requests')
+            .select('*')
+            .eq('status', currentStatus)
+            .order('requested_at', { ascending: false })
+        
+        const container = document.getElementById('requestsList')
+        
+        if (error || !requests || requests.length === 0) {
+            container.innerHTML = `<div class="no-requests">✅ No ${currentStatus} withdrawal requests</div>`
+            return
+        }
+        
+        let html = ''
+        for (const req of requests) {
+            const date = new Date(req.requested_at).toLocaleString()
+            
+            html += `
+                <div class="request-item" id="req-${req.id}">
+                    <div class="request-header">
+                        <span class="request-id">#${req.id}</span>
+                        <span class="request-date">${date}</span>
+                        <span class="status-badge status-${req.status}">${req.status.toUpperCase()}</span>
+                    </div>
+                    <div class="request-details">
+                        <div class="detail-item">
+                            <span class="detail-label">User ID</span>
+                            <span class="detail-value">${req.user_id}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Amount</span>
+                            <span class="detail-value">₹${req.amount}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">UPI ID</span>
+                            <span class="detail-value">${escapeHtml(req.upi_id)}</span>
+                        </div>
+                    </div>
+            `
+            
+            if (req.status === 'pending') {
+                html += `
+                    <div class="action-buttons">
+                        <button class="approve-btn" onclick="approveWithdrawal('${req.id}', '${req.user_id}', ${req.amount})">✅ Approve</button>
+                        <button class="reject-btn" onclick="rejectWithdrawal('${req.id}')">❌ Reject</button>
+                    </div>
+                `
+            }
+            
+            html += `</div>`
+        }
+        container.innerHTML = html
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return ''
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;'
+            if (m === '<') return '&lt;'
+            if (m === '>') return '&gt;'
+            return m
+        })
+    }
+    
+    window.approveWithdrawal = async function(id, userId, amount) {
+        if (!confirm(`⚠️ Confirm: You have sent ₹${amount} to this user? After payment, click OK.`)) return
+        
+        const btn = document.querySelector(`#req-${id} .approve-btn`)
+        if (btn) {
+            btn.disabled = true
+            btn.innerHTML = '<span class="loading-spinner"></span> Processing...'
+        }
+        
+        try {
+            // Get current available balance
+            const { data: earnings } = await supabase
+                .from('user_earnings')
+                .select('available_balance')
+                .eq('user_id', userId)
+                .single()
+            
+            const newBalance = (earnings?.available_balance || 0) - amount
+            
+            // Deduct from user's wallet
+            await supabase
+                .from('user_earnings')
+                .update({ 
+                    available_balance: newBalance,
+                    last_updated: new Date().toISOString()
+                })
+                .eq('user_id', userId)
+            
+            // Update withdrawal request status
+            await supabase
+                .from('withdrawal_requests')
+                .update({ 
+                    status: 'approved', 
+                    processed_at: new Date().toISOString(),
+                    notes: 'Payment completed'
+                })
+                .eq('id', id)
+            
+            alert(`✅ Withdrawal approved! ₹${amount} deducted from user's wallet.`)
+            loadRequests()
+            
+        } catch (err) {
+            alert("Error processing approval")
+            if (btn) {
+                btn.disabled = false
+                btn.innerHTML = '✅ Approve'
+            }
+        }
+    }
+    
+    window.rejectWithdrawal = async function(id) {
+        if (!confirm("Reject this withdrawal request?")) return
+        
+        const btn = document.querySelector(`#req-${id} .reject-btn`)
+        if (btn) {
+            btn.disabled = true
+            btn.innerHTML = '<span class="loading-spinner"></span> Processing...'
+        }
+        
+        try {
+            // Delete the withdrawal request
+            await supabase
+                .from('withdrawal_requests')
+                .delete()
+                .eq('id', id)
+            
+            alert("❌ Withdrawal request rejected and deleted.")
+            loadRequests()
+            
+        } catch (err) {
+            alert("Error rejecting request")
+            if (btn) {
+                btn.disabled = false
+                btn.innerHTML = '❌ Reject'
+            }
+        }
+    }
+    
+    // Tab functionality
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
+            tab.classList.add('active')
+            currentStatus = tab.getAttribute('data-status')
+            loadRequests()
+        })
+    })
+    
+    function openMenuOnly() {
+        document.getElementById('menu').classList.add('active')
+        document.getElementById('overlay').classList.add('active')
+        document.body.classList.add('menu-open')
+        document.body.style.top = `-${window.scrollY}px`
+    }
+
+    function closeMenuOnly() {
+        document.getElementById('menu').classList.remove('active')
+        document.getElementById('overlay').classList.remove('active')
+        document.body.classList.remove('menu-open')
+        const scrollY = document.body.style.top
+        document.body.style.top = ''
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    }
+
+    function goToDashboard() {
+        window.location.href = 'dashboard.html'
+    }
+    
+    window.confirmLogout = async function() {
+        if (confirm("Are you sure you want to logout?")) {
+            await supabase.auth.signOut()
+            window.location.href = 'login.html'
+        }
+    }
+    
+    checkAdmin().then(() => loadRequests())
+</script>
+
+</body>
+</html>

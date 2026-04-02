@@ -36,74 +36,87 @@
             height: 100%;
         }
 
-        .header-container {
-            position: relative;
-            width: 100%;
-        }
+        /* ==================== HEADER (Index.html जैसा) ==================== */
+.header-container {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 
-        .header-bg {
-            background: #e0e5ec;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-            border-radius: 0 0 20px 20px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            z-index: 1;
-        }
+.header-bg {
+    background: #e0e5ec;
+    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    border-radius: 0 0 20px 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    z-index: 1;
+}
 
-        .header-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 20px;
-            height: 70px;
-        }
+.header-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    height: 70px;
+}
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+.logo-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    top: -3px;
+    left: -10px;
+}
 
-        .brand-text {
-            font-size: 22px;
-            font-weight: 800;
-            color: #1e40af;
-            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-            white-space: nowrap;
-        }
+.brand-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1e40af;
+    text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+    white-space: nowrap;
+    position: relative;
+    top: 0px;
+    left: -15px;
+}
 
-        .menu-btn {
-            width: 40px;
-            height: 40px;
-            background: #e0e5ec;
-            border: none;
-            border-radius: 10px;
-            color: #4f46e5;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-        }
+.menu-btn {
+    width: 40px;
+    height: 40px;
+    background: #e0e5ec;
+    border: none;
+    border-radius: 10px;
+    color: #4f46e5;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    transition: .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 0px;
+    right: -8px;
+    z-index: 3;
+    padding: 0;
+}
 
-        .menu-btn:active {
-            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
-        }
+.menu-btn:active {
+    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+}
 
         .overlay {
             position: fixed;
@@ -117,13 +130,11 @@
             visibility: hidden;
             transition: 0.3s;
             z-index: 999;
-            pointer-events: none;
         }
 
         .overlay.active {
             opacity: 1;
             visibility: visible;
-            pointer-events: none;
         }
 
         .menu-container {
@@ -367,10 +378,10 @@
     <div class="menu-items">
         <div class="menu-box digital-box">
             <span class="digital-title">Digital Earner</span>
-            <button class="close-btn" onclick="closeMenuOnly()">✕</button>
+            <button class="close-btn" id="closeMenuBtn">✕</button>
         </div>
-        <div class="menu-box" style="background:#4f46e5; color:white;" onclick="goToDashboard()">
-            <span class="menu-link" style="color:white;">← Back to Dashboard</span>
+        <div class="menu-box" id="backToDashboard">
+            <span class="menu-link">← Back</span>
         </div>
         <div class="menu-box">
             <a href="index.html" class="menu-link">🏠 Home</a>
@@ -379,13 +390,10 @@
             <a href="about.html" class="menu-link">📖 About Us</a>
         </div>
         <div class="menu-box">
+            <a href="help.html" class="menu-link">📞 Contact Us</a>
+        </div>
+        <div class="menu-box">
             <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
-        </div>
-        <div class="menu-box">
-            <a href="rewards.html" class="menu-link">🎁 Rewards</a>
-        </div>
-        <div class="menu-box">
-            <span class="menu-link" onclick="confirmLogout()">🚪 Logout</span>
         </div>
     </div>
 </div>
@@ -397,56 +405,56 @@
             <img src="logo.png" alt="Logo" class="logo-img">
             <span class="brand-text">Digital Earner</span>
         </div>
-        <button class="menu-btn" onclick="openMenuOnly()">☰</button>
+        <button class="menu-btn" id="menuBtn">☰</button>
     </div>
 </div>
 
 <div class="earn-container">
     
-    <div class="referral-card" onclick="openReferral('https://angel-one.onelink.me/Wjgr/v0w9h00a')">
+    <div class="referral-card">
         <div class="card-header">
             <div class="card-icon">👼</div>
             <h3>Angel One</h3>
         </div>
         <div class="bonus-badge">💰 Earn ₹200-300</div>
         <div class="task-text">✅ Task: Complete registration & KYC on Angel One app</div>
-        <button class="claim-btn" onclick="event.stopPropagation(); openReferral('https://angel-one.onelink.me/Wjgr/v0w9h00a')">
+        <button class="claim-btn" data-link="angel-one.onelink.me/Wjgr/v0w9h00a" data-broker="Angel One" data-original="https://angel-one.onelink.me/Wjgr/v0w9h00a">
             🚀 Complete Task & Earn →
         </button>
     </div>
     
-    <div class="referral-card" onclick="openReferral('https://upstox.onelink.me/0H1s/6CANE4')">
+    <div class="referral-card">
         <div class="card-header">
             <div class="card-icon" style="background: linear-gradient(135deg, #059669, #10b981);">📈</div>
             <h3>Upstox</h3>
         </div>
         <div class="bonus-badge">💰 Earn ₹200-250</div>
         <div class="task-text">✅ Task: Open account & complete KYC on Upstox</div>
-        <button class="claim-btn" onclick="event.stopPropagation(); openReferral('https://upstox.onelink.me/0H1s/6CANE4')">
+        <button class="claim-btn" data-link="upstox.onelink.me/0H1s/6CANE4" data-broker="Upstox" data-original="https://upstox.onelink.me/0H1s/6CANE4">
             🚀 Complete Task & Earn →
         </button>
     </div>
     
-    <div class="referral-card" onclick="openReferral('https://5paisa.page.link/srJu6M7daAtcRXzLA')">
+    <div class="referral-card">
         <div class="card-header">
             <div class="card-icon" style="background: linear-gradient(135deg, #dc2626, #ef4444);">💰</div>
             <h3>5Paisa</h3>
         </div>
         <div class="bonus-badge">💰 Earn ₹200-250</div>
         <div class="task-text">✅ Task: Register & complete account opening on 5Paisa</div>
-        <button class="claim-btn" onclick="event.stopPropagation(); openReferral('https://5paisa.page.link/srJu6M7daAtcRXzLA')">
+        <button class="claim-btn" data-link="5paisa.page.link/srJu6M7daAtcRXzLA" data-broker="5Paisa" data-original="https://5paisa.page.link/srJu6M7daAtcRXzLA">
             🚀 Complete Task & Earn →
         </button>
     </div>
     
-    <div class="referral-card" onclick="openReferral('https://mstock.onelink.me/CX05/56h6ow03')">
+    <div class="referral-card">
         <div class="card-header">
             <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6, #a855f7);">📊</div>
             <h3>m.Stock</h3>
         </div>
         <div class="bonus-badge">💰 Earn ₹200-250</div>
         <div class="task-text">✅ Task: Sign up & activate your m.Stock account</div>
-        <button class="claim-btn" onclick="event.stopPropagation(); openReferral('https://mstock.onelink.me/CX05/56h6ow03')">
+        <button class="claim-btn" data-link="mstock.onelink.me/CX05/56h6ow03" data-broker="m.Stock" data-original="https://mstock.onelink.me/CX05/56h6ow03">
             🚀 Complete Task & Earn →
         </button>
     </div>
@@ -469,14 +477,96 @@
     const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
     const supabase = createClient(supabaseUrl, supabaseKey)
     
+    let currentUser = null
+    let userName = "User"
+    
     async function protectPage() {
         const { data } = await supabase.auth.getSession()
         if (!data.session) {
             window.location.replace("login.html")
         }
+        return data.session
     }
     
-    protectPage()
+    async function loadUserName() {
+        const session = await protectPage()
+        if (session) {
+            const user = session.user
+            currentUser = user
+            const name = user.user_metadata?.full_name
+            if (name) {
+                userName = name
+            } else {
+                userName = user.email.split("@")[0]
+            }
+        }
+    }
+    
+    async function trackReferral(brokerName, originalLink) {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return false
+        
+        try {
+            const { error } = await supabase
+                .from('referrals')
+                .insert({
+                    referrer_id: user.id,
+                    broker_name: brokerName,
+                    referral_link: originalLink,
+                    status: 'pending'
+                })
+            
+            if (error) {
+                console.error("Track error:", error)
+                return false
+            }
+            return true
+        } catch (err) {
+            console.error("Track error:", err)
+            return false
+        }
+    }
+    
+    function generateShareText(cleanLink) {
+        return `${userName} has invited you to join *Digital Earner*🔥✨\n\n` +
+               `🚀 Start your earning journey today with zero investment.\n\n` +
+               `✅ Complete Your Process And Join *Digital Earner*\n\n` +
+               `👉 Join here: ${cleanLink}\n\n` +
+               `✨ Limited seats available. Register now!\n\n` +
+               `Founder & CEO \n*SHADMAN RAO*`
+    }
+    
+    async function shareLink(cleanLink, brokerName, originalLink) {
+        await trackReferral(brokerName, originalLink)
+        
+        const shareText = generateShareText(cleanLink)
+        
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: "Digital Earner - Invitation",
+                    text: shareText
+                })
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    prompt("Copy this text to share:", shareText)
+                }
+            }
+        } else {
+            prompt("Copy this text to share:", shareText)
+        }
+    }
+    
+    document.querySelectorAll('.claim-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+            e.stopPropagation()
+            await loadUserName()
+            const cleanLink = this.getAttribute('data-link')
+            const brokerName = this.getAttribute('data-broker')
+            const originalLink = this.getAttribute('data-original')
+            shareLink(cleanLink, brokerName, originalLink)
+        })
+    })
     
     const userNames = [
         "Rahul", "Amit", "Vikram", "Priya", "Neha", "Arjun", "Sneha", "Rohan", "Anjali", "Kunal",
@@ -508,43 +598,51 @@
     
     function updateNotification() {
         const notificationText = getRandomNotification()
-        document.getElementById('notificationText').textContent = notificationText
-        
+        const notificationEl = document.getElementById('notificationText')
+        if (notificationEl) {
+            notificationEl.textContent = notificationText
+        }
         const interval = Math.floor(Math.random() * (25000 - 18000 + 1)) + 18000
         setTimeout(updateNotification, interval)
     }
     
     setTimeout(updateNotification, 5000)
+    loadUserName()
     
-    window.openReferral = function(url) {
-        window.open(url, '_blank')
-    }
+    const menu = document.getElementById('menu')
+    const overlay = document.getElementById('overlay')
+    const menuBtn = document.getElementById('menuBtn')
+    const closeMenuBtn = document.getElementById('closeMenuBtn')
     
-    window.openMenuOnly = function() {
-        document.getElementById('menu').classList.add('active')
-        document.getElementById('overlay').classList.add('active')
+    function openMenuOnly() {
+        menu.classList.add('active')
+        overlay.classList.add('active')
         document.body.classList.add('menu-open')
         document.body.style.top = `-${window.scrollY}px`
     }
-
-    window.closeMenuOnly = function() {
-        document.getElementById('menu').classList.remove('active')
-        document.getElementById('overlay').classList.remove('active')
+    
+    function closeMenuOnly() {
+        menu.classList.remove('active')
+        overlay.classList.remove('active')
         document.body.classList.remove('menu-open')
         const scrollY = document.body.style.top
         document.body.style.top = ''
         window.scrollTo(0, parseInt(scrollY || '0') * -1)
     }
-
-    window.goToDashboard = function() {
-        window.location.href = 'dashboard.html'
+    
+    if (menuBtn) {
+        menuBtn.addEventListener('click', openMenuOnly)
     }
     
-    window.confirmLogout = async function() {
-        if (confirm("Are you sure you want to logout?")) {
-            await supabase.auth.signOut()
-            window.location.href = 'login.html'
-        }
+    if (closeMenuBtn) {
+        closeMenuBtn.addEventListener('click', closeMenuOnly)
+    }
+    
+    const backBtn = document.getElementById('backToDashboard')
+    if (backBtn) {
+        backBtn.addEventListener('click', function() {
+            window.location.href = 'dashboard.html'
+        })
     }
 </script>
 

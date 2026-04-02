@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Withdraw - Digital Earner</title>
+    <link rel="icon" href="logo.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f3f4f6, #eef2ff);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        @keyframes fadeSlideUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        body { animation: fadeSlideUp 0.8s ease-out; }
+        body.menu-open { overflow: hidden; position: fixed; width: 100%; height: 100%; }
+
+        .header-container {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.header-bg {
+    background: #e0e5ec;
+    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    border-radius: 0 0 20px 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    z-index: 1;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    height: 70px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    top: -3px;
+    left: -10px;
+}
+
+.brand-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1e40af;
+    text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+    white-space: nowrap;
+    position: relative;
+    top: 0px;
+    left: -15px;
+}
+
+.menu-btn {
+    width: 40px;
+    height: 40px;
+    background: #e0e5ec;
+    border: none;
+    border-radius: 10px;
+    color: #4f46e5;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    transition: .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 0px;
+    right: -8px;
+    z-index: 3;
+    padding: 0;
+}
+
+.menu-btn:active {
+    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+}
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px);
+            opacity: 0; visibility: hidden; transition: 0.3s; z-index: 999;
+            pointer-events: none;
+        }
+        .overlay.active { opacity: 1; visibility: visible; pointer-events: none; }
+
+        .menu-container {
+            position: fixed; top: 0; right: -300px; width: 280px;
+            background: #e0e5ec; transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000; padding: 20px 15px; box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+            border-radius: 25px 0 0 25px; max-height: 100vh; overflow-y: auto;
+        }
+        .menu-container.active { right: 0; }
+        .menu-items { display: flex; flex-direction: column; gap: 10px; }
+        .menu-box {
+            background: #e0e5ec; border-radius: 12px; padding: 10px 15px;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff; transition: 0.3s;
+        }
+        .menu-box.digital-box { padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
+        .digital-title { font-size: 20px; font-weight: bold; color: #e67e22; text-shadow: 2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff; }
+        .close-btn {
+            width: 36px; height: 36px; background: #e0e5ec; border: none; border-radius: 10px;
+            color: #ef4444; font-size: 20px; cursor: pointer;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            display: flex; align-items: center; justify-content: center; transition: 0.2s;
+        }
+        .menu-link {
+            display: block; font-size: 16px; font-weight: 600; color: #333333;
+            text-decoration: none; padding: 8px 5px; border-radius: 6px; transition: 0.2s; cursor: pointer;
+        }
+
+        .withdraw-container { max-width: 450px; margin: 20px auto; padding: 15px 20px; display: flex; flex-direction: column; gap: 20px; }
+        
+        .profile-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 28px;
+            padding: 12px 16px 14px 16px;
+            box-shadow: 0 8px 18px -6px rgba(0,0,0,0.06);
+            border-left: 5px solid #4f46e5;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .profile-image-wrapper { display: flex; justify-content: center; margin-bottom: 8px; }
+        .profile-image-border {
+            width: 65px; height: 65px;
+            background: linear-gradient(135deg, #4f46e5, #f59e0b, #4f46e5);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            padding: 2px; box-shadow: 0 6px 15px -4px rgba(79,70,229,0.25);
+        }
+        .profile-image {
+            width: 61px; height: 61px;
+            background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .profile-image img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-name {
+            font-size: 18px; font-weight: 800;
+            background: linear-gradient(135deg, #1e293b, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center; margin-bottom: 3px;
+        }
+        .profile-email { text-align: center; margin-bottom: 5px; }
+        .profile-email span {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: #f1f5f9; padding: 2px 10px; border-radius: 30px;
+            font-size: 10px; color: #475569; font-weight: 500;
+        }
+        .verified-badge { text-align: center; margin-bottom: 8px; }
+        .verified-badge span {
+            display: inline-flex; align-items: center; gap: 4px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white; font-size: 8px; padding: 2px 10px; border-radius: 30px;
+            font-weight: 600;
+        }
+        .divider { margin: 6px 0 8px 0; position: relative; }
+        .divider-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e2e8f0, #cbd5e1, #e2e8f0, transparent);
+        }
+        .divider-dot {
+            position: absolute; top: -3px; left: 50%; transform: translateX(-50%);
+            width: 18px; height: 4px; background: #4f46e5; border-radius: 4px;
+        }
+        .progress-title { text-align: center; margin-bottom: 8px; }
+        .progress-title div {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: #eef2ff; padding: 3px 12px; border-radius: 30px;
+        }
+        .progress-title div span { font-size: 11px; font-weight: 700; color: #4f46e5; }
+        .pulse-dot { width: 4px; height: 4px; background: #4f46e5; border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse {
+            0% { opacity: 0.4; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.4; transform: scale(0.8); }
+        }
+        
+        .stats-cards { display: flex; justify-content: space-between; gap: 8px; }
+        .stat-card { flex: 1; text-align: center; padding: 6px 4px; border-radius: 14px; }
+        .stat-card.pending { background: linear-gradient(145deg, #fffbeb, #fef3c7); }
+        .stat-card.success { background: linear-gradient(145deg, #f0fdf4, #dcfce7); }
+        .stat-card.reject { background: linear-gradient(145deg, #fef2f2, #fee2e2); }
+        .stat-number { font-size: 18px; font-weight: 800; }
+        .stat-number.pending { color: #f59e0b; }
+        .stat-number.success { color: #10b981; }
+        .stat-number.reject { color: #ef4444; }
+        .stat-label { font-size: 8px; font-weight: 600; margin-top: 2px; }
+        .stat-label.pending { color: #92400e; }
+        .stat-label.success { color: #166534; }
+        .stat-label.reject { color: #991b1b; }
+        .stat-sub { font-size: 7px; color: #6b7280; margin-top: 1px; }
+        
+        .withdraw-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 28px; padding: 25px;
+            box-shadow: 0 8px 20px -6px rgba(0,0,0,0.08);
+            border-left: 5px solid #f59e0b;
+        }
+        .withdraw-title { font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+        
+        .balance-box {
+            background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+            border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 25px;
+        }
+        .balance-label { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 5px; }
+        .balance-amount { font-size: 42px; font-weight: 800; color: white; }
+        .balance-amount span { font-size: 24px; }
+        
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 6px; }
+        .form-group input {
+            width: 100%; padding: 14px 16px; border: none; border-radius: 18px; font-size: 14px;
+            background: #e0e5ec; box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+            transition: 0.3s;
+        }
+        .form-group input:focus { outline: none; box-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff; }
+        .info-text { font-size: 12px; color: #64748b; margin-top: 5px; }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+            border: none; border-radius: 30px; padding: 14px; width: 100%;
+            font-size: 16px; font-weight: 700; color: white; cursor: pointer;
+            transition: 0.2s; box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff; margin-top: 10px;
+        }
+        .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        
+        .footer { background: #0f172a; color: #e2e8f0; text-align: center; padding: 18px 20px; margin-top: 30px; font-size: 12px; }
+        .loading-spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="menu-container" id="menu">
+    <div class="menu-items">
+        <div class="menu-box digital-box">
+            <span class="digital-title">Digital Earner</span>
+            <button class="close-btn" id="closeMenuBtn">✕</button>
+        </div>
+        <div class="menu-box" id="backToDashboard">
+            <span class="menu-link">← Back</span>
+        </div>
+        <div class="menu-box">
+            <a href="index.html" class="menu-link">🏠 Home</a>
+        </div>
+        <div class="menu-box">
+            <a href="about.html" class="menu-link">📖 About Us</a>
+        </div>
+        <div class="menu-box">
+            <span class="menu-link" onclick="window.open('https://wa.me/917217392800','_blank')">📞 Contact Us</span>
+        </div>
+        <div class="menu-box">
+            <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
+        </div>
+    </div>
+</div>
+
+<div class="header-container">
+    <div class="header-bg"></div>
+    <div class="header-content">
+        <div class="header-left">
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <span class="brand-text">Digital Earner</span>
+        </div>
+        <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+</div>
+
+<div class="withdraw-container">
+    
+    <div class="profile-card">
+        <div class="profile-image-wrapper">
+            <div class="profile-image-border">
+                <div class="profile-image">
+                    <img id="userProfileImg" src="" alt="Profile" style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:none;">
+                    <span id="userProfileInitial" style="display:flex; font-size:28px; color:#4f46e5;">👤</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-name" id="userName">Loading...</div>
+        
+        <div class="profile-email">
+            <span>📧 <span id="userEmail">loading...</span></span>
+        </div>
+        
+        <div class="verified-badge">
+            <span>✅ Verified</span>
+        </div>
+        
+        <div class="divider">
+            <div class="divider-line"></div>
+            <div class="divider-dot"></div>
+        </div>
+        
+        <div class="progress-title">
+            <div>
+                <div class="pulse-dot"></div>
+                <span>WITHDRAWAL PROGRESS</span>
+                <div class="pulse-dot"></div>
+            </div>
+        </div>
+        
+        <div class="stats-cards">
+            <div class="stat-card pending">
+                <div class="stat-number pending" id="pendingCount">0</div>
+                <div class="stat-label pending">Pending</div>
+                <div class="stat-sub">In Progress</div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-number success" id="successCount">0</div>
+                <div class="stat-label success">Successful</div>
+                <div class="stat-sub">Completed</div>
+            </div>
+            <div class="stat-card reject">
+                <div class="stat-number reject" id="rejectCount">0</div>
+                <div class="stat-label reject">Rejected</div>
+                <div class="stat-sub">Cancelled</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="withdraw-card">
+        <div class="withdraw-title">💸 Withdraw Funds</div>
+        
+        <div class="balance-box">
+            <div class="balance-label">Available Balance</div>
+            <div class="balance-amount"><span>₹</span><span id="availableBalance">0</span></div>
+        </div>
+        
+        <div class="form-group">
+            <label>Amount (Min ₹100)</label>
+            <input type="number" id="amount" placeholder="Enter amount" min="100">
+        </div>
+        
+        <div class="form-group">
+            <label>UPI ID / Bank Account</label>
+            <input type="text" id="upiId" placeholder="example@okhdfcbank / 9876543210@paytm">
+            <div class="info-text">📌 Google Pay, PhonePe, Paytm se payment aayegi</div>
+        </div>
+        
+        <button class="submit-btn" id="submitBtn">Request Withdrawal →</button>
+    </div>
+    
+</div>
+
+<div class="footer">
+    © 2026 Digital Earner · All rights reserved
+</div>
+
+<script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    
+    const supabaseUrl = "https://yqxbwgxfhibbdkgglydw.supabase.co"
+    const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
+    const supabase = createClient(supabaseUrl, supabaseKey)
+    const BUCKET_NAME = "profile-images"
+    
+    async function protectPage() {
+        const { data } = await supabase.auth.getSession()
+        if (!data.session) {
+            window.location.replace("login.html")
+        }
+        return data.session
+    }
+    
+    async function loadUserInfo() {
+        const session = await protectPage()
+        if (session) {
+            const user = session.user
+            const email = user.email
+            const name = user.user_metadata?.full_name || email.split('@')[0]
+            
+            document.getElementById("userName").textContent = name
+            document.getElementById("userEmail").textContent = email
+            
+            await loadProfileImage(user.id)
+        }
+    }
+    
+    async function loadProfileImage(userId) {
+        try {
+            const { data, error } = await supabase
+                .storage
+                .from(BUCKET_NAME)
+                .download(`${userId}/profile.jpg`)
+            
+            if (data) {
+                const url = URL.createObjectURL(data)
+                const img = document.getElementById("userProfileImg")
+                const initial = document.getElementById("userProfileInitial")
+                img.src = url
+                img.style.display = "block"
+                initial.style.display = "none"
+            }
+        } catch (error) {
+            console.log("No profile image found")
+        }
+    }
+    
+    async function loadBalance() {
+        const session = await protectPage()
+        const { data: earnings } = await supabase
+            .from('user_earnings')
+            .select('available_balance')
+            .eq('user_id', session.user.id)
+            .single()
+        
+        const balance = earnings?.available_balance || 0
+        document.getElementById('availableBalance').textContent = balance.toLocaleString()
+    }
+    
+    async function loadWithdrawStats() {
+        const session = await protectPage()
+        
+        const { data: withdrawals } = await supabase
+            .from('withdrawal_requests')
+            .select('status')
+            .eq('user_id', session.user.id)
+        
+        const pending = withdrawals?.filter(w => w.status === 'pending').length || 0
+        const success = withdrawals?.filter(w => w.status === 'approved').length || 0
+        const reject = withdrawals?.filter(w => w.status === 'rejected').length || 0
+        
+        document.getElementById('pendingCount').textContent = pending
+        document.getElementById('successCount').textContent = success
+        document.getElementById('rejectCount').textContent = reject
+    }
+    
+    window.submitWithdrawal = async function() {
+        const amount = parseInt(document.getElementById('amount').value)
+        const upiId = document.getElementById('upiId').value.trim()
+        const btn = document.getElementById('submitBtn')
+        
+        if (!amount || amount < 100) {
+            alert("Minimum withdrawal amount is ₹100")
+            return
+        }
+        if (!upiId) {
+            alert("Please enter UPI ID or bank account")
+            return
+        }
+        
+        const session = await protectPage()
+        const { data: earnings } = await supabase
+            .from('user_earnings')
+            .select('available_balance')
+            .eq('user_id', session.user.id)
+            .single()
+        
+        if (amount > (earnings?.available_balance || 0)) {
+            alert("Insufficient balance")
+            return
+        }
+        
+        btn.disabled = true
+        btn.innerHTML = '<span class="loading-spinner"></span> Submitting...'
+        
+        const { error } = await supabase
+            .from('withdrawal_requests')
+            .insert({
+                user_id: session.user.id,
+                amount: amount,
+                upi_id: upiId,
+                status: 'pending'
+            })
+        
+        if (error) {
+            alert("Failed to submit request: " + error.message)
+            btn.disabled = false
+            btn.innerHTML = 'Request Withdrawal →'
+            return
+        }
+        
+        alert("✅ Withdrawal request submitted successfully! Admin will process within 24 hours.")
+        document.getElementById('amount').value = ''
+        document.getElementById('upiId').value = ''
+        
+        loadWithdrawStats()
+        
+        btn.disabled = false
+        btn.innerHTML = 'Request Withdrawal →'
+    }
+    
+    document.getElementById('submitBtn').addEventListener('click', window.submitWithdrawal)
+    
+    function openMenuOnly() {
+        document.getElementById('menu').classList.add('active')
+        document.getElementById('overlay').classList.add('active')
+        document.body.classList.add('menu-open')
+        document.body.style.top = `-${window.scrollY}px`
+    }
+    function closeMenuOnly() {
+        document.getElementById('menu').classList.remove('active')
+        document.getElementById('overlay').classList.remove('active')
+        document.body.classList.remove('menu-open')
+        const scrollY = document.body.style.top
+        document.body.style.top = ''
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    }
+    
+    document.getElementById('menuBtn').addEventListener('click', openMenuOnly)
+    document.getElementById('closeMenuBtn').addEventListener('click', closeMenuOnly)
+    document.getElementById('backToDashboard').addEventListener('click', () => window.location.href = 'dashboard.html')
+    
+    protectPage()
+    loadUserInfo()
+    loadBalance()
+    loadWithdrawStats()
+</script>
+
+</body>
+</html>

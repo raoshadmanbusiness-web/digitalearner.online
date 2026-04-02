@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Claim Reward - Digital Earner</title>
+    <link rel="icon" href="logo.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f3f4f6, #eef2ff);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            animation: fadeSlideUp 0.8s ease-out;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        .header-container {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.header-bg {
+    background: #e0e5ec;
+    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    border-radius: 0 0 20px 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    z-index: 1;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    height: 70px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    top: -3px;
+    left: -10px;
+}
+
+.brand-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1e40af;
+    text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+    white-space: nowrap;
+    position: relative;
+    top: 0px;
+    left: -15px;
+}
+
+.menu-btn {
+    width: 40px;
+    height: 40px;
+    background: #e0e5ec;
+    border: none;
+    border-radius: 10px;
+    color: #4f46e5;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    transition: .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 0px;
+    right: -8px;
+    z-index: 3;
+    padding: 0;
+}
+
+.menu-btn:active {
+    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+}
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: none;
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            background: #e0e5ec;
+            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            padding: 20px 15px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 25px 0 0 25px;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .menu-container.active {
+            right: 0;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu-box {
+            background: #e0e5ec;
+            border-radius: 12px;
+            padding: 10px 15px;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            transition: 0.3s;
+        }
+
+        .menu-box.digital-box {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .digital-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e67e22;
+            text-shadow: 2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff;
+            white-space: nowrap;
+        }
+
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #ef4444;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .close-btn:active {
+            box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+        }
+
+        .menu-link {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+            text-decoration: none;
+            padding: 8px 5px;
+            border-radius: 6px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .menu-link:hover {
+            color: #e67e22;
+            padding-left: 15px;
+            background: #f0f3ff;
+        }
+
+        .claim-container {
+            max-width: 450px;
+            margin: 20px auto;
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .claim-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 28px;
+            padding: 25px;
+            box-shadow: 0 8px 20px -6px rgba(0,0,0,0.08);
+            border-left: 5px solid #f59e0b;
+        }
+
+        .claim-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .claim-sub {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            border-radius: 18px;
+            font-size: 14px;
+            background: #e0e5ec;
+            box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            box-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff;
+        }
+
+        .form-group input.readonly-field {
+            background: #f1f5f9;
+            cursor: default;
+        }
+
+        .file-upload {
+            background: #e0e5ec;
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+            transition: 0.2s;
+        }
+
+        .file-upload:hover {
+            box-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .file-upload p {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        #fileName {
+            font-size: 11px;
+            color: #10b981;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+            border: none;
+            border-radius: 30px;
+            padding: 14px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            margin-top: 10px;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+            box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .success-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: white;
+            border-radius: 28px;
+            padding: 30px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .success-popup.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .success-popup .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .success-popup h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .success-popup p {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .success-popup button {
+            background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .footer {
+            background: #0f172a;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 18px 20px;
+            margin-top: 30px;
+            font-size: 12px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: white;
+            border-radius: 28px;
+            padding: 30px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+        
+        .error-popup.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .error-popup .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+        
+        .error-popup h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 8px;
+        }
+        
+        .error-popup button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="menu-container" id="menu">
+    <div class="menu-items">
+        <div class="menu-box digital-box">
+            <span class="digital-title">Digital Earner</span>
+            <button class="close-btn" id="closeMenuBtn">✕</button>
+        </div>
+        <div class="menu-box" id="backToDashboard">
+            <span class="menu-link">← Back</span>
+        </div>
+        <div class="menu-box">
+            <a href="index.html" class="menu-link">🏠 Home</a>
+        </div>
+        <div class="menu-box">
+            <a href="about.html" class="menu-link">📖 About Us</a>
+        </div>
+        <div class="menu-box">
+    <a href="help.html" class="menu-link">📞 Contact Us</a>
+</div>
+        <div class="menu-box">
+            <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
+        </div>
+    </div>
+</div>
+
+<div class="header-container">
+    <div class="header-bg"></div>
+    <div class="header-content">
+        <div class="header-left">
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <span class="brand-text">Digital Earner</span>
+        </div>
+        <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+</div>
+
+<div class="claim-container">
+    
+    <div class="claim-card">
+        <div class="claim-title">🎁 Claim Your Reward</div>
+        <div class="claim-sub">Complete your broker registration and submit proof to claim ₹100 bonus</div>
+        
+        <div class="form-group">
+            <label>Your Full Name</label>
+            <input type="text" id="userName" placeholder="Your name" class="readonly-field" readonly>
+        </div>
+        
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="userEmail" placeholder="Your email" class="readonly-field" readonly>
+        </div>
+        
+        <div class="form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="userMobile" placeholder="Enter 10-digit mobile number" maxlength="10">
+        </div>
+        
+        <div class="form-group">
+            <label>Broker Name *</label>
+            <select id="brokerName">
+                <option value="">Select Broker</option>
+                <option value="Angel One">Angel One</option>
+                <option value="Upstox">Upstox</option>
+                <option value="5Paisa">5Paisa</option>
+                <option value="m.Stock">m.Stock</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Screenshot Proof *</label>
+            <div class="file-upload" onclick="document.getElementById('screenshot').click()">
+                <span class="upload-icon">📸 ➕</span>
+                <p>Click to upload screenshot</p>
+            </div>
+            <input type="file" id="screenshot" accept="image/*" style="display:none" onchange="showFileName()">
+            <div id="fileName"></div>
+        </div>
+        
+        <button class="submit-btn" id="submitBtn">Submit Claim →</button>
+    </div>
+    
+</div>
+
+<div class="success-popup" id="successPopup">
+    <div class="icon">✅</div>
+    <h3>Claim Submitted!</h3>
+    <p>Your claim has been submitted successfully. Admin will verify within 24 hours.</p>
+    <button id="okBtn">OK</button>
+</div>
+
+<div class="error-popup" id="errorPopup">
+    <div class="icon">❌</div>
+    <h3>Submission Failed</h3>
+    <p id="errorMessage">Something went wrong. Please try again.</p>
+    <button id="errorOkBtn">Try Again</button>
+</div>
+
+<div class="footer">
+    © 2026 Digital Earner · All rights reserved
+</div>
+
+<script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    
+    const supabaseUrl = "https://yqxbwgxfhibbdkgglydw.supabase.co"
+    const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
+    const supabase = createClient(supabaseUrl, supabaseKey)
+    
+    let selectedFile = null
+    let selectedFileData = null
+    
+    async function protectPage() {
+        const { data } = await supabase.auth.getSession()
+        if (!data.session) {
+            window.location.replace("login.html")
+        }
+        return data.session
+    }
+    
+    async function loadUserInfo() {
+        try {
+            const session = await protectPage()
+            if (session) {
+                const user = session.user
+                document.getElementById('userEmail').value = user.email
+                const name = user.user_metadata?.full_name || user.email.split('@')[0]
+                document.getElementById('userName').value = name
+            }
+        } catch (err) {
+            console.error("Load user error:", err)
+        }
+    }
+    
+    function validateForm() {
+        const mobile = document.getElementById('userMobile').value.trim()
+        const broker = document.getElementById('brokerName').value
+        
+        if (!mobile) {
+            alert("Please enter your mobile number")
+            document.getElementById('userMobile').focus()
+            return false
+        }
+        if (mobile.length !== 10 || !/^[6-9]\d{9}$/.test(mobile)) {
+            alert("Please enter a valid 10-digit Indian mobile number (starts with 6,7,8,9)")
+            document.getElementById('userMobile').focus()
+            return false
+        }
+        if (!broker) {
+            alert("Please select a broker")
+            document.getElementById('brokerName').focus()
+            return false
+        }
+        if (!selectedFile) {
+            alert("Please upload screenshot proof")
+            return false
+        }
+        return true
+    }
+    
+    window.showFileName = function() {
+        const file = document.getElementById('screenshot').files[0]
+        if (file) {
+            if (file.size > 2 * 1024 * 1024) {
+                alert("File size should be less than 2MB")
+                document.getElementById('screenshot').value = ''
+                return
+            }
+            if (!file.type.startsWith('image/')) {
+                alert("Please upload an image file")
+                document.getElementById('screenshot').value = ''
+                return
+            }
+            selectedFile = file
+            document.getElementById('fileName').innerHTML = `✅ ${file.name}`
+            
+            const reader = new FileReader()
+            reader.onload = function(e) {
+                selectedFileData = e.target.result
+            }
+            reader.readAsDataURL(file)
+        }
+    }
+    
+    async function uploadScreenshot(userId) {
+        if (!selectedFile) return null
+        
+        const fileExt = selectedFile.name.split('.').pop()
+        const fileName = `claim_${userId}_${Date.now()}.${fileExt}`
+        const filePath = `claims/${fileName}`
+        
+        const { error: uploadError } = await supabase.storage
+            .from('claim-proofs')
+            .upload(filePath, selectedFile)
+        
+        if (uploadError) {
+            console.error("Upload error:", uploadError)
+            return null
+        }
+        
+        const { data: urlData } = supabase.storage
+            .from('claim-proofs')
+            .getPublicUrl(filePath)
+        
+        return urlData.publicUrl
+    }
+    
+    function showError(message) {
+        const errorPopup = document.getElementById('errorPopup')
+        const errorMessage = document.getElementById('errorMessage')
+        errorMessage.textContent = message
+        errorPopup.classList.add('active')
+    }
+    
+    window.submitClaim = async function() {
+        if (!validateForm()) return
+        
+        const btn = document.getElementById('submitBtn')
+        btn.disabled = true
+        btn.innerHTML = '<span class="loading-spinner"></span> Submitting...'
+        
+        try {
+            const session = await protectPage()
+            const userId = session.user.id
+            const name = document.getElementById('userName').value.trim()
+            const email = document.getElementById('userEmail').value.trim()
+            const mobile = document.getElementById('userMobile').value.trim()
+            const broker = document.getElementById('brokerName').value
+            
+            // Upload screenshot to Supabase Storage
+            const screenshotUrl = await uploadScreenshot(userId)
+            
+            if (!screenshotUrl) {
+                showError("Failed to upload screenshot. Please try again.")
+                btn.disabled = false
+                btn.innerHTML = 'Submit Claim →'
+                return
+            }
+            
+            // Save claim request to database
+            const { data: claimData, error: claimError } = await supabase
+                .from('claim_requests')
+                .insert({
+                    user_id: userId,
+                    user_name: name,
+                    user_email: email,
+                    user_mobile: mobile,
+                    broker_name: broker,
+                    proof_screenshot: screenshotUrl,
+                    status: 'pending'
+                })
+                .select()
+            
+            if (claimError) {
+                console.error("Claim save error:", claimError)
+                showError("Failed to submit claim: " + claimError.message)
+                btn.disabled = false
+                btn.innerHTML = 'Submit Claim →'
+                return
+            }
+            
+            // Show success popup
+            const popup = document.getElementById('successPopup')
+            popup.classList.add('active')
+            
+            // Reset form
+            document.getElementById('userMobile').value = ''
+            document.getElementById('brokerName').value = ''
+            document.getElementById('screenshot').value = ''
+            document.getElementById('fileName').innerHTML = ''
+            selectedFile = null
+            selectedFileData = null
+            
+            btn.disabled = false
+            btn.innerHTML = 'Submit Claim →'
+            
+        } catch (err) {
+            console.error("Submit error:", err)
+            showError("Something went wrong: " + err.message)
+            btn.disabled = false
+            btn.innerHTML = 'Submit Claim →'
+        }
+    }
+    
+    document.getElementById('submitBtn').addEventListener('click', window.submitClaim)
+    
+    document.getElementById('okBtn').addEventListener('click', function() {
+        window.location.href = 'dashboard.html'
+    })
+    
+    document.getElementById('errorOkBtn').addEventListener('click', function() {
+        document.getElementById('errorPopup').classList.remove('active')
+    })
+    
+    function openMenuOnly() {
+        document.getElementById('menu').classList.add('active')
+        document.getElementById('overlay').classList.add('active')
+        document.body.classList.add('menu-open')
+        document.body.style.top = `-${window.scrollY}px`
+    }
+
+    function closeMenuOnly() {
+        document.getElementById('menu').classList.remove('active')
+        document.getElementById('overlay').classList.remove('active')
+        document.body.classList.remove('menu-open')
+        const scrollY = document.body.style.top
+        document.body.style.top = ''
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    }
+    
+    document.getElementById('menuBtn').addEventListener('click', openMenuOnly)
+    document.getElementById('closeMenuBtn').addEventListener('click', closeMenuOnly)
+    document.getElementById('backToDashboard').addEventListener('click', function() {
+        window.location.href = 'dashboard.html'
+    })
+    
+    loadUserInfo()
+</script>
+
+</body>
+</html>

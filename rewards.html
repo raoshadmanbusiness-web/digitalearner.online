@@ -40,75 +40,85 @@
         }
 
         .header-container {
-            position: relative;
-            width: 100%;
-        }
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
 
-        .header-bg {
-            background: #e0e5ec;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-            border-radius: 0 0 20px 20px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            z-index: 1;
-        }
+.header-bg {
+    background: #e0e5ec;
+    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    border-radius: 0 0 20px 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    z-index: 1;
+}
 
-        .header-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 20px;
-            height: 70px;
-        }
+.header-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 20px;
+    height: 70px;
+}
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+.logo-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    top: -3px;
+    left: -10px;
+}
 
-        .brand-text {
-            font-size: 22px;
-            font-weight: 800;
-            color: #1e40af;
-            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-            white-space: nowrap;
-        }
+.brand-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1e40af;
+    text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+    white-space: nowrap;
+    position: relative;
+    top: 0px;
+    left: -15px;
+}
 
-        .menu-btn {
-            width: 40px;
-            height: 40px;
-            background: #e0e5ec;
-            border: none;
-            border-radius: 10px;
-            color: #4f46e5;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 3;
-            padding: 0;
-        }
+.menu-btn {
+    width: 40px;
+    height: 40px;
+    background: #e0e5ec;
+    border: none;
+    border-radius: 10px;
+    color: #4f46e5;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+    transition: .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 0px;
+    right: -8px;
+    z-index: 3;
+    padding: 0;
+}
 
-        .menu-btn:active {
-            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
-        }
+.menu-btn:active {
+    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+}
 
         .overlay {
             position: fixed;
@@ -476,6 +486,21 @@
             margin-top: 40px;
             font-size: 14px;
         }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0,0,0,0.3);
+            border-top-color: #1e40af;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 6px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -489,9 +514,9 @@
             <button class="close-btn" onclick="closeMenuOnly()">✕</button>
         </div>
         
-        <div class="menu-box" style="background:#4f46e5; color:white;" onclick="goToDashboard()">
-            <span class="menu-link" style="color:white;">← Back to Dashboard</span>
-        </div>
+        <div class="menu-box" onclick="goToDashboard()">
+    <span class="menu-link">← Back</span>
+</div>
         
         <div class="menu-box">
             <a href="index.html" class="menu-link">🏠 Home</a>
@@ -500,7 +525,7 @@
             <a href="about.html" class="menu-link">📖 About Us</a>
         </div>
         <div class="menu-box">
-            <a href="https://wa.me/917217392800" class="menu-link" target="_blank">📞 Contact</a>
+            <a href="https://wa.me/917217392800" class="menu-link" target="_blank">📞 Contact Us</a>
         </div>
         <div class="menu-box">
             <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
@@ -526,111 +551,20 @@
     <div class="featured-info">
         <h3>🔥 AirPods Pro</h3>
         <p>Wireless, Noise Cancellation, Spatial Audio</p>
-        <div class="featured-task">Complete 50 tasks this month</div>
+        <div class="featured-task" id="airpodsTask">Loading...</div>
     </div>
 </div>
 
 <div class="section-title">✨ Best Rewards This Month ✨</div>
 
-<div class="products-grid">
-    <div class="product-card">
-        <div class="product-image">
-            <img src="mouse.jpg" alt="Gaming Mouse" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-        </div>
-        <div class="product-title">Gaming Mouse</div>
-        <div class="product-desc">RGB, 6400 DPI, 6 Buttons</div>
-        <div class="task-requirement">Complete 10 tasks this month</div>
-        <button class="claim-btn" data-reward="Gaming Mouse" data-req="10">Claim</button>
-    </div>
-    
-    <div class="product-card">
-        <div class="product-image">
-            <img src="watch.jpg" alt="Smart Watch" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-        </div>
-        <div class="product-title">Smart Watch</div>
-        <div class="product-desc">Heart Rate, Steps, Sleep Tracker</div>
-        <div class="task-requirement">Complete 12 tasks this month</div>
-        <button class="claim-btn" data-reward="Smart Watch" data-req="12">Claim</button>
-    </div>
-    
-    <div class="product-card">
-        <div class="product-image">
-            <img src="headphone.jpg" alt="Headphones" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-        </div>
-        <div class="product-title">Wireless Headphones</div>
-        <div class="product-desc">Over-ear, Deep Bass, 30hr Battery</div>
-        <div class="task-requirement">Complete 14 tasks this month</div>
-        <button class="claim-btn" data-reward="Wireless Headphones" data-req="14">Claim</button>
-    </div>
-    
-    <div class="product-card">
-        <div class="product-image">
-            <img src="amazon.jpg" alt="Amazon Gift Card" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-        </div>
-        <div class="product-title">Amazon Gift Card</div>
-        <div class="product-desc">₹500 Value • Shop Anything</div>
-        <div class="task-requirement">Complete 5 tasks this month</div>
-        <button class="claim-btn" data-reward="Amazon Gift Card" data-req="5">Claim</button>
-    </div>
-    
-    <div class="product-card">
-        <div class="product-image">
-            <img src="flipkart.jpg" alt="Flipkart Voucher" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-        </div>
-        <div class="product-title">Flipkart Voucher</div>
-        <div class="product-desc">₹400 Off • Minimum Purchase</div>
-        <div class="task-requirement">Complete 6 tasks this month</div>
-        <button class="claim-btn" data-reward="Flipkart Voucher" data-req="6">Claim</button>
-    </div>
-    
-    <div class="product-card">
-        <div class="product-image">
-            <img src="speaker.jpg" alt="Bluetooth Speaker" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-        </div>
-        <div class="product-title">Bluetooth Speaker</div>
-        <div class="product-desc">Portable, 10W, LED Lights</div>
-        <div class="task-requirement">Complete 8 tasks this month</div>
-        <button class="claim-btn" data-reward="Bluetooth Speaker" data-req="8">Claim</button>
-    </div>
-    
-    <div class="product-card">
-        <div class="product-image">
-            <img src="powerbank.jpg" alt="Power Bank" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-        </div>
-        <div class="product-title">Power Bank</div>
-        <div class="product-desc">10000mAh, Fast Charging</div>
-        <div class="task-requirement">Complete 7 tasks this month</div>
-        <button class="claim-btn" data-reward="Power Bank" data-req="7">Claim</button>
-    </div>
-    
-    <div class="product-card">
-        <div class="product-image">
-            <img src="earbuds.jpg" alt="TWS Earbuds" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-        </div>
-        <div class="product-title">TWS Earbuds</div>
-        <div class="product-desc">Bluetooth 5.3, 20hrs Battery</div>
-        <div class="task-requirement">Complete 9 tasks this month</div>
-        <button class="claim-btn" data-reward="TWS Earbuds" data-req="9">Claim</button>
-    </div>
+<div class="products-grid" id="productsGrid">
+    <!-- Products will be loaded dynamically -->
 </div>
 
 <div class="section-title">🎯 Special Offers</div>
 
-<div class="offer-grid">
-    <div class="offer-card">
-        <div class="offer-icon">🔥</div>
-        <div class="offer-title">Double Rewards</div>
-        <div class="offer-desc">Get 2x value on next claim</div>
-        <div class="offer-task">Complete 10 tasks this month</div>
-        <button class="claim-offer-btn" data-reward="Double Rewards" data-req="10">Claim</button>
-    </div>
-    <div class="offer-card">
-        <div class="offer-icon">⚡</div>
-        <div class="offer-title">Early Bird Bonus</div>
-        <div class="offer-desc">Extra gift on first 5 tasks</div>
-        <div class="offer-task">Complete 5 tasks this month</div>
-        <button class="claim-offer-btn" data-reward="Early Bird Bonus" data-req="5">Claim</button>
-    </div>
+<div class="offer-grid" id="offersGrid">
+    <!-- Offers will be loaded dynamically -->
 </div>
 
 <div class="reward-popup" id="rewardPopup">
@@ -641,7 +575,143 @@
     <p>© 2026 Digital Earner · All rights reserved</p>
 </div>
 
-<script>
+<script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    
+    const supabaseUrl = "https://yqxbwgxfhibbdkgglydw.supabase.co"
+    const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
+    const supabase = createClient(supabaseUrl, supabaseKey)
+    
+    let completedTasks = 0
+    
+    // Rewards data
+    const rewards = [
+        { name: "Gaming Mouse", desc: "RGB, 6400 DPI, 6 Buttons", img: "mouse.jpg", required: 10 },
+        { name: "Smart Watch", desc: "Heart Rate, Steps, Sleep Tracker", img: "watch.jpg", required: 12 },
+        { name: "Wireless Headphones", desc: "Over-ear, Deep Bass, 30hr Battery", img: "headphone.jpg", required: 14 },
+        { name: "Amazon Gift Card", desc: "₹500 Value • Shop Anything", img: "amazon.jpg", required: 5 },
+        { name: "Flipkart Voucher", desc: "₹400 Off • Minimum Purchase", img: "flipkart.jpg", required: 6 },
+        { name: "Bluetooth Speaker", desc: "Portable, 10W, LED Lights", img: "speaker.jpg", required: 8 },
+        { name: "Power Bank", desc: "10000mAh, Fast Charging", img: "powerbank.jpg", required: 7 },
+        { name: "TWS Earbuds", desc: "Bluetooth 5.3, 20hrs Battery", img: "earbuds.jpg", required: 9 }
+    ]
+    
+    const offers = [
+        { name: "Double Rewards", desc: "Get 2x value on next claim", icon: "🔥", required: 10 },
+        { name: "Early Bird Bonus", desc: "Extra gift on first 5 tasks", icon: "⚡", required: 5 }
+    ]
+    
+    async function protectPage() {
+        const { data } = await supabase.auth.getSession()
+        if (!data.session) {
+            window.location.replace("login.html")
+        }
+        return data.session
+    }
+    
+    async function loadCompletedTasks() {
+        const session = await protectPage()
+        const user = session.user
+        
+        const { data: referrals, error } = await supabase
+            .from('referrals')
+            .select('status')
+            .eq('referrer_id', user.id)
+            .eq('status', 'success')
+        
+        if (error) {
+            console.error("Error loading tasks:", error)
+            return 0
+        }
+        
+        return referrals?.length || 0
+    }
+    
+    function getRemainingText(required) {
+        const remaining = required - completedTasks
+        if (remaining <= 0) {
+            return "✅ Unlocked! You can claim this reward!"
+        }
+        return `📌 ${remaining} more tasks to unlock`
+    }
+    
+    function showPopup(message) {
+        const popup = document.getElementById('rewardPopup');
+        const msgSpan = document.getElementById('popupMessage');
+        msgSpan.textContent = message;
+        popup.classList.add('show');
+        
+        setTimeout(() => {
+            popup.classList.remove('show');
+        }, 3000);
+    }
+    
+    function handleClaim(rewardName, required) {
+        const remaining = required - completedTasks
+        
+        if (remaining <= 0) {
+            showPopup(`🎉 Congratulations! You have unlocked ${rewardName}! 🎉`);
+        } else {
+            showPopup(`🎯 Complete ${remaining} more tasks to unlock ${rewardName}!`);
+        }
+    }
+    
+    function renderRewards() {
+        const productsGrid = document.getElementById('productsGrid')
+        const offersGrid = document.getElementById('offersGrid')
+        
+        // Render products
+        productsGrid.innerHTML = rewards.map(reward => `
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="${reward.img}" alt="${reward.name}" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+                </div>
+                <div class="product-title">${reward.name}</div>
+                <div class="product-desc">${reward.desc}</div>
+                <div class="task-requirement">${getRemainingText(reward.required)}</div>
+                <button class="claim-btn" data-reward="${reward.name}" data-req="${reward.required}">Claim</button>
+            </div>
+        `).join('')
+        
+        // Render offers
+        offersGrid.innerHTML = offers.map(offer => `
+            <div class="offer-card">
+                <div class="offer-icon">${offer.icon}</div>
+                <div class="offer-title">${offer.name}</div>
+                <div class="offer-desc">${offer.desc}</div>
+                <div class="offer-task">${getRemainingText(offer.required)}</div>
+                <button class="claim-offer-btn" data-reward="${offer.name}" data-req="${offer.required}">Claim</button>
+            </div>
+        `).join('')
+        
+        // Update AirPods task text
+        document.getElementById('airpodsTask').textContent = getRemainingText(50)
+        
+        // Add event listeners to all claim buttons
+        document.querySelectorAll('.claim-btn, .claim-offer-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                this.classList.add('clicked');
+                setTimeout(() => {
+                    this.classList.remove('clicked');
+                }, 300);
+                
+                const reward = this.getAttribute('data-reward');
+                const required = parseInt(this.getAttribute('data-req'));
+                handleClaim(reward, required);
+            });
+        });
+    }
+    
+    async function init() {
+        // Show loading
+        document.getElementById('productsGrid').innerHTML = '<div style="text-align:center; padding:40px;"><div class="loading-spinner"></div> Loading rewards...</div>'
+        
+        completedTasks = await loadCompletedTasks()
+        renderRewards()
+    }
+    
     function openMenuOnly() {
         document.getElementById('menu').classList.add('active');
         document.getElementById('overlay').classList.add('active');
@@ -661,42 +731,12 @@
     function goToDashboard() {
         window.location.href = "dashboard.html";
     }
-
-    function showPopup(message) {
-        const popup = document.getElementById('rewardPopup');
-        const msgSpan = document.getElementById('popupMessage');
-        msgSpan.textContent = message;
-        popup.classList.add('show');
-        
-        setTimeout(() => {
-            popup.classList.remove('show');
-        }, 3000);
-    }
     
-    document.querySelectorAll('.claim-btn, .claim-offer-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            this.classList.add('clicked');
-            setTimeout(() => {
-                this.classList.remove('clicked');
-            }, 300);
-            
-            const reward = this.getAttribute('data-reward') || 'this reward';
-            const required = this.getAttribute('data-req') || 'some';
-            
-            const messages = [
-                `🎯 Keep going! Complete ${required} tasks to claim ${reward}!`,
-                `✨ You're almost there! Just ${required} more tasks needed!`,
-                `💪 ${required} tasks required - Keep sharing your link!`,
-                `🎁 Complete ${required} tasks this month to unlock ${reward}!`,
-                `⚡ Share with friends - ${required} tasks needed for ${reward}!`
-            ];
-            
-            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-            showPopup(randomMsg);
-        });
-    });
+    window.openMenuOnly = openMenuOnly
+    window.closeMenuOnly = closeMenuOnly
+    window.goToDashboard = goToDashboard
+    
+    init()
 </script>
 
 </body>
