@@ -527,11 +527,35 @@
                 .eq('id', claimId)
             
             // Add ₹100 to user's earnings
-            const { data: earnings } = await supabase
-                .from('user_earnings')
-                .select('*')
-                .eq('user_id', userId)
-                .single()
+            const { data: earnings, error: earningsError } = await supabase
+    .from('user_earnings')
+    .select('*')
+    .eq('user_id', userId)
+    .single()
+
+if (earningsError && earningsError.code === 'PGRST116') {
+    // ❗ user ka record exist nahi karta → create new
+    await supabase.from('user_earnings').insert({
+        user_id: userId,
+        today_earnings: 100,
+        week_earnings: 100,
+        month_earnings: 100,
+        total_earnings: 100,
+        available_balance: 100
+    })
+} else if (earnings) {
+    // ✅ already exist → update
+    await supabase
+        .from('user_earnings')
+        .update({
+            today_earnings: (earnings.today_earnings || 0) + 100,
+            week_earnings: (earnings.week_earnings || 0) + 100,
+            month_earnings: (earnings.month_earnings || 0) + 100,
+            total_earnings: (earnings.total_earnings || 0) + 100,
+            available_balance: (earnings.available_balance || 0) + 100
+        })
+        .eq('user_id', userId)
+}
             
             if (earnings) {
                 await supabase
