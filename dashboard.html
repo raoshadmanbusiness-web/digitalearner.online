@@ -542,20 +542,6 @@ Let's start your greatest earning journey 🚀
 <div class="box-sub">Withdraw your earnings</div>
 </div>
 
-<!-- Admin Claim Requests -->
-<div id="adminClaimBox" class="box" style="display:none;" onclick="openPage('admin-claims.html')">
-    <div class="box-emoji">📋</div>
-    <div class="box-title">Claim Requests</div>
-    <div class="box-sub">Manage user claims</div>
-</div>
-
-<!-- Admin Withdraw Requests -->
-<div id="adminWithdrawBox" class="box" style="display:none;" onclick="openPage('admin-withdrawals.html')">
-    <div class="box-emoji">💰</div>
-    <div class="box-title">Withdraw Requests</div>
-    <div class="box-sub">Manage withdrawals</div>
-</div>
-
 </div>
 
 <div class="footer">
@@ -595,11 +581,6 @@ closeMenuOnly();
 function closeLogout(){
 document.getElementById("logoutPopup").style.display="none";
 }
-
-window.confirmLogout = function() {
-    document.getElementById("logoutPopup").style.display = "none";
-    window.location.href = "login.html";
-}
 </script>
 
 <script type="module">
@@ -630,19 +611,42 @@ async function loadUser() {
     }
 }
 
-async function checkAdmin() {
-    const { data: { user } } = await supabase.auth.getUser()
+// ==================== FIXED LOGOUT FUNCTION ====================
+window.confirmLogout = async function() {
+    document.getElementById("logoutPopup").style.display = "none";
     
-    if (user && user.email === "digitalearner.business@gmail.com") {
-        document.getElementById("adminClaimBox").style.display = "flex"
-        document.getElementById("adminWithdrawBox").style.display = "flex"
+    // Show loading indicator
+    const btn = document.querySelector('.yes-btn');
+    if (btn) btn.textContent = 'Logging out...';
+    
+    try {
+        // Sign out from Supabase
+        const { error } = await supabase.auth.signOut();
+        
+        if (error) {
+            console.error("Logout error:", error);
+            alert("Error logging out. Please try again.");
+        }
+        
+        // Clear any local storage data
+        localStorage.removeItem('hasAccount');
+        localStorage.removeItem('rememberMe');
+        localStorage.removeItem('rememberedEmail');
+        
+        // Redirect to login page
+        window.location.replace("login.html");
+        
+    } catch (err) {
+        console.error("Logout error:", err);
+        alert("Error logging out. Please try again.");
+        window.location.href = "login.html";
     }
 }
 
 await checkAuth()
 await loadUser()
-await checkAdmin()
 
+// No admin boxes anymore - removed completely
 </script>
 
 </body>

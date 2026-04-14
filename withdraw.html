@@ -18,85 +18,76 @@
         body.menu-open { overflow: hidden; position: fixed; width: 100%; height: 100%; }
 
         .header-container {
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.header-bg {
-    background: #e0e5ec;
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-    border-radius: 0 0 20px 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    z-index: 1;
-}
-
-.header-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 20px;
-    height: 70px;
-}
-
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.logo-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    position: relative;
-    top: -3px;
-    left: -10px;
-}
-
-.brand-text {
-    font-size: 22px;
-    font-weight: 800;
-    color: #1e40af;
-    text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-    white-space: nowrap;
-    position: relative;
-    top: 0px;
-    left: -15px;
-}
-
-.menu-btn {
-    width: 40px;
-    height: 40px;
-    background: #e0e5ec;
-    border: none;
-    border-radius: 10px;
-    color: #4f46e5;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-    transition: .2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    top: 0px;
-    right: -8px;
-    z-index: 3;
-    padding: 0;
-}
-
-.menu-btn:active {
-    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
-}
+            position: relative;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .header-bg {
+            background: #e0e5ec;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 1;
+        }
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 20px;
+            height: 70px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            top: -3px;
+            left: -10px;
+        }
+        .brand-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e40af;
+            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            white-space: nowrap;
+            position: relative;
+            top: 0px;
+            left: -15px;
+        }
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #4f46e5;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: 0px;
+            right: -8px;
+            z-index: 3;
+            padding: 0;
+        }
+        .menu-btn:active { box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff; }
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px);
@@ -104,7 +95,6 @@
             pointer-events: none;
         }
         .overlay.active { opacity: 1; visibility: visible; pointer-events: none; }
-
         .menu-container {
             position: fixed; top: 0; right: -300px; width: 280px;
             background: #e0e5ec; transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -238,7 +228,12 @@
             transition: 0.3s;
         }
         .form-group input:focus { outline: none; box-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff; }
+        .form-group input.error {
+            box-shadow: inset 4px 4px 8px #ffb3b3, inset -4px -4px 8px #ffffff;
+            border: 1px solid #ef4444;
+        }
         .info-text { font-size: 12px; color: #64748b; margin-top: 5px; }
+        .error-text { color: #ef4444; font-size: 12px; margin-top: 5px; display: none; }
         
         .submit-btn {
             background: linear-gradient(135deg, #4f46e5, #8b5cf6);
@@ -251,6 +246,28 @@
         .footer { background: #0f172a; color: #e2e8f0; text-align: center; padding: 18px 20px; margin-top: 30px; font-size: 12px; }
         .loading-spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            text-align: center;
+            z-index: 3000;
+            animation: slideUp 0.3s ease;
+            display: none;
+        }
+        .toast-message.success { background: #10b981; }
+        .toast-message.error { background: #ef4444; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -363,6 +380,7 @@
             <label>UPI ID / Bank Account</label>
             <input type="text" id="upiId" placeholder="example@okhdfcbank / 9876543210@paytm">
             <div class="info-text">📌 Google Pay, PhonePe, Paytm se payment aayegi</div>
+            <div id="upiError" class="error-text"></div>
         </div>
         
         <button class="submit-btn" id="submitBtn">Request Withdrawal →</button>
@@ -374,6 +392,8 @@
     © 2026 Digital Earner · All rights reserved
 </div>
 
+<div id="toastMessage" class="toast-message"></div>
+
 <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
     
@@ -381,6 +401,33 @@
     const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
     const supabase = createClient(supabaseUrl, supabaseKey)
     const BUCKET_NAME = "profile-images"
+    
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toastMessage')
+        toast.textContent = message
+        toast.className = `toast-message ${type}`
+        toast.style.display = 'block'
+        setTimeout(() => {
+            toast.style.display = 'none'
+        }, 3000)
+    }
+    
+    function validateUPIId(upiId) {
+        if (!upiId || upiId.trim() === '') {
+            return { valid: false, message: "Please enter UPI ID or bank account" }
+        }
+        if (upiId.length < 5) {
+            return { valid: false, message: "UPI ID is too short (minimum 5 characters)" }
+        }
+        const upiPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+$/
+        const mobileUpiPattern = /^[6-9]\d{9}@[a-zA-Z0-9.-]+$/
+        const mobilePattern = /^[6-9]\d{9}$/
+        
+        if (upiPattern.test(upiId) || mobileUpiPattern.test(upiId) || mobilePattern.test(upiId)) {
+            return { valid: true, message: "" }
+        }
+        return { valid: false, message: "Invalid UPI ID. Use format: username@bankname or mobile@paytm" }
+    }
     
     async function protectPage() {
         const { data } = await supabase.auth.getSession()
@@ -453,17 +500,45 @@
         document.getElementById('rejectCount').textContent = reject
     }
     
+    document.getElementById('upiId').addEventListener('input', function() {
+        const upiId = this.value.trim();
+        if (upiId === '') {
+            document.getElementById('upiError').style.display = 'none';
+            this.classList.remove('error');
+        } else {
+            const validation = validateUPIId(upiId);
+            if (!validation.valid) {
+                document.getElementById('upiError').textContent = validation.message;
+                document.getElementById('upiError').style.display = 'block';
+                this.classList.add('error');
+            } else {
+                document.getElementById('upiError').style.display = 'none';
+                this.classList.remove('error');
+            }
+        }
+    });
+    
     window.submitWithdrawal = async function() {
         const amount = parseInt(document.getElementById('amount').value)
         const upiId = document.getElementById('upiId').value.trim()
         const btn = document.getElementById('submitBtn')
         
         if (!amount || amount < 100) {
-            alert("Minimum withdrawal amount is ₹100")
+            showToast("Minimum withdrawal amount is ₹100", "error")
+            document.getElementById('amount').focus()
             return
         }
+        
         if (!upiId) {
-            alert("Please enter UPI ID or bank account")
+            showToast("Please enter UPI ID or bank account", "error")
+            document.getElementById('upiId').focus()
+            return
+        }
+        
+        const upiValidation = validateUPIId(upiId)
+        if (!upiValidation.valid) {
+            showToast(upiValidation.message, "error")
+            document.getElementById('upiId').focus()
             return
         }
         
@@ -475,14 +550,14 @@
             .single()
         
         if (amount > (earnings?.available_balance || 0)) {
-            alert("Insufficient balance")
+            showToast("Insufficient balance", "error")
             return
         }
         
         btn.disabled = true
         btn.innerHTML = '<span class="loading-spinner"></span> Submitting...'
         
-        const { error } = await supabase
+        const { error, data: requestData } = await supabase
             .from('withdrawal_requests')
             .insert({
                 user_id: session.user.id,
@@ -490,19 +565,40 @@
                 upi_id: upiId,
                 status: 'pending'
             })
+            .select()
         
         if (error) {
-            alert("Failed to submit request: " + error.message)
+            showToast("Failed to submit request: " + error.message, "error")
             btn.disabled = false
             btn.innerHTML = 'Request Withdrawal →'
             return
         }
         
-        alert("✅ Withdrawal request submitted successfully! Admin will process within 24 hours.")
+        // ==================== TELEGRAM NOTIFICATION ====================
+        try {
+            const { data: { user } } = await supabase.auth.getUser()
+            const userName = user.user_metadata?.full_name || user.email.split('@')[0]
+            const requestId = requestData && requestData[0] ? requestData[0].id : 'pending'
+            
+            await supabase.rpc('send_telegram_notification_real', {
+                p_type: 'withdraw',
+                p_user_name: userName,
+                p_user_email: user.email,
+                p_amount: amount,
+                p_upi_id: upiId,
+                p_request_id: requestId.toString()
+            })
+            console.log("Telegram notification sent")
+        } catch (notifyErr) {
+            console.error("Telegram notify error:", notifyErr)
+        }
+        
+        showToast("✅ Withdrawal request submitted successfully! Admin will process within 24 hours.", "success")
         document.getElementById('amount').value = ''
         document.getElementById('upiId').value = ''
         
         loadWithdrawStats()
+        loadBalance()
         
         btn.disabled = false
         btn.innerHTML = 'Request Withdrawal →'

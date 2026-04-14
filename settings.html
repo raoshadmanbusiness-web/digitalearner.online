@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Settings - Digital Earner</title>
+    <link rel="icon" href="logo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f3f4f6, #eef2ff);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+            animation: fadeSlideUp 0.8s ease-out;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        .header-container {
+            position: relative;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-bg {
+            background: #e0e5ec;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 20px;
+            height: 70px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            top: -3px;
+            left: -10px;
+        }
+
+        .brand-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e40af;
+            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            white-space: nowrap;
+            position: relative;
+            top: 0px;
+            left: -15px;
+        }
+
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #4f46e5;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: 0px;
+            right: -8px;
+            z-index: 3;
+            padding: 0;
+        }
+
+        .menu-btn:active {
+            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: none;
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            background: #e0e5ec;
+            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1000;
+            padding: 20px 15px;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 25px 0 0 25px;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .menu-container.active {
+            right: 0;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu-box {
+            background: #e0e5ec;
+            border-radius: 12px;
+            padding: 10px 15px;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            transition: 0.3s;
+        }
+
+        .menu-box.digital-box {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .digital-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e67e22;
+            text-shadow: 2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff;
+            white-space: nowrap;
+        }
+
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #ef4444;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .close-btn:active {
+            box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+        }
+
+        .menu-link {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333333;
+            text-decoration: none;
+            padding: 8px 5px;
+            border-radius: 6px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .menu-link:hover {
+            color: #e67e22;
+            padding-left: 15px;
+            background: #f0f3ff;
+        }
+
+        .settings-container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 15px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .settings-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border-radius: 28px;
+            padding: 25px;
+            box-shadow: 0 8px 20px -6px rgba(0,0,0,0.08);
+            border-left: 5px solid #4f46e5;
+        }
+
+        .settings-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .settings-sub {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .profile-image-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .profile-image-border {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #4f46e5, #f59e0b, #4f46e5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px;
+            box-shadow: 0 6px 15px -4px rgba(79,70,229,0.25);
+        }
+
+        .profile-image {
+            width: 94px;
+            height: 94px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-image span {
+            font-size: 45px;
+            color: #4f46e5;
+        }
+
+        .camera-badge {
+            position: absolute;
+            bottom: 5px;
+            right: calc(50% - 50px);
+            width: 32px;
+            height: 32px;
+            background: #4f46e5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            border-radius: 18px;
+            font-size: 14px;
+            background: #e0e5ec;
+            box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            box-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff;
+        }
+
+        .form-group input.error {
+            box-shadow: inset 4px 4px 8px #ffb3b3, inset -4px -4px 8px #ffffff;
+            border: 1px solid #ef4444;
+        }
+
+        .error-text {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-text {
+            color: #10b981;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+            border: none;
+            border-radius: 30px;
+            padding: 14px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            margin-top: 10px;
+        }
+
+        .btn-save:active {
+            transform: scale(0.98);
+            box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+        }
+
+        .btn-save:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .password-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .password-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .footer {
+            background: #0f172a;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 18px 20px;
+            margin-top: 30px;
+            font-size: 12px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        #loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            background: #e0e5ec;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff;
+        }
+
+        .loader div {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #1e40af;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            text-align: center;
+            z-index: 3000;
+            animation: slideUp 0.3s ease;
+            display: none;
+        }
+
+        .toast-message.success {
+            background: #10b981;
+        }
+
+        .toast-message.error {
+            background: #ef4444;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading">
+    <div class="loader"><div></div></div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="menu-container" id="menu">
+    <div class="menu-items">
+        <div class="menu-box digital-box">
+            <span class="digital-title">Digital Earner</span>
+            <button class="close-btn" id="closeMenuBtn">✕</button>
+        </div>
+        <div class="menu-box" id="backToDashboard">
+            <span class="menu-link">← Back</span>
+        </div>
+        <div class="menu-box">
+            <a href="index.html" class="menu-link">🏠 Home</a>
+        </div>
+        <div class="menu-box">
+            <a href="about.html" class="menu-link">📖 About Us</a>
+        </div>
+        <div class="menu-box">
+            <a href="help.html" class="menu-link">📞 Contact Us</a>
+        </div>
+        <div class="menu-box">
+            <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
+        </div>
+    </div>
+</div>
+
+<div class="logout-popup" id="logoutPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:5000; backdrop-filter:blur(4px);">
+    <div class="popup-box" style="background:white; padding:32px 28px; border-radius:20px; width:320px; max-width:90%; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.3);">
+        <div class="popup-title" style="font-size:20px; font-weight:700; margin-bottom:12px;">Confirm Logout</div>
+        <div class="popup-text" style="font-size:15px; margin-bottom:24px;">Are you sure you want to log out?</div>
+        <div class="popup-buttons" style="display:flex; gap:16px; justify-content:center;">
+            <button class="yes-btn" onclick="confirmLogout()" style="padding:12px 32px; border:none; border-radius:12px; cursor:pointer; font-size:16px; font-weight:600; background:#ef4444; color:white;">Yes</button>
+            <button class="no-btn" onclick="closeLogout()" style="padding:12px 32px; border:none; border-radius:12px; cursor:pointer; font-size:16px; font-weight:600; background:#f3f4f6;">No</button>
+        </div>
+    </div>
+</div>
+
+<div class="header-container">
+    <div class="header-bg"></div>
+    <div class="header-content">
+        <div class="header-left">
+            <img src="logo.png" alt="Logo" class="logo-img">
+            <span class="brand-text">Digital Earner</span>
+        </div>
+        <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+</div>
+
+<div class="settings-container">
+    
+    <div class="settings-card">
+        <div class="settings-title">⚙️ Account Settings</div>
+        <div class="settings-sub">Update your profile information</div>
+        
+        <!-- Profile Image Section -->
+        <div class="profile-image-section">
+            <div class="profile-image-border">
+                <div class="profile-image" onclick="document.getElementById('profileUpload').click()">
+                    <img id="profileImg" src="" alt="Profile" style="display: none;">
+                    <span id="profileInitial">👤</span>
+                </div>
+            </div>
+            <div class="camera-badge" onclick="document.getElementById('profileUpload').click()">📷</div>
+            <input type="file" id="profileUpload" accept="image/jpeg,image/png,image/gif,image/webp" style="display: none;">
+        </div>
+        
+        <!-- Profile Form -->
+        <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="fullName" placeholder="Enter your full name">
+            <div id="nameError" class="error-text"></div>
+        </div>
+        
+        <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" id="email" placeholder="Enter your email">
+            <div id="emailError" class="error-text"></div>
+            <div class="info-text">📧 Email cannot be changed. Contact support for email change.</div>
+        </div>
+        
+        <div class="form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="mobile" placeholder="Enter 10-digit mobile number" maxlength="10">
+            <div id="mobileError" class="error-text"></div>
+        </div>
+        
+        <!-- Password Change Section -->
+        <div class="password-section">
+            <div class="password-title">🔐 Change Password</div>
+            
+            <div class="form-group">
+                <label>Current Password *</label>
+                <input type="password" id="currentPassword" placeholder="Enter current password">
+                <div id="currentPassError" class="error-text"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>New Password *</label>
+                <input type="password" id="newPassword" placeholder="Enter new password (min 6 characters)">
+                <div id="newPassError" class="error-text"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>Confirm New Password *</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm new password">
+                <div id="confirmPassError" class="error-text"></div>
+            </div>
+        </div>
+        
+        <button class="btn-save" id="saveBtn">💾 Save Changes</button>
+    </div>
+    
+</div>
+
+<div class="footer">
+    © 2026 Digital Earner · All rights reserved
+</div>
+
+<div id="toastMessage" class="toast-message"></div>
+
+<script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+    
+    const supabaseUrl = "https://yqxbwgxfhibbdkgglydw.supabase.co"
+    const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
+    const supabase = createClient(supabaseUrl, supabaseKey)
+    
+    const BUCKET_NAME = "profile-images"
+    let currentUser = null
+    let selectedImageFile = null
+    
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toastMessage')
+        toast.textContent = message
+        toast.className = `toast-message ${type}`
+        toast.style.display = 'block'
+        setTimeout(() => {
+            toast.style.display = 'none'
+        }, 3000)
+    }
+    
+    async function protectPage() {
+        const { data } = await supabase.auth.getSession()
+        if (!data.session) {
+            window.location.replace("login.html")
+            return false
+        }
+        currentUser = data.session.user
+        return true
+    }
+    
+    async function loadUserData() {
+        if (!currentUser) return
+        
+        // Load user metadata
+        const name = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0]
+        const mobile = currentUser.user_metadata?.mobile || ''
+        
+        document.getElementById('fullName').value = name
+        document.getElementById('email').value = currentUser.email
+        document.getElementById('email').disabled = true
+        document.getElementById('mobile').value = mobile
+        
+        await loadProfileImage(currentUser.id)
+    }
+    
+    async function loadProfileImage(userId) {
+        try {
+            const { data, error } = await supabase
+                .storage
+                .from(BUCKET_NAME)
+                .download(`${userId}/profile.jpg`)
+            
+            if (data) {
+                const url = URL.createObjectURL(data)
+                const img = document.getElementById("profileImg")
+                const initial = document.getElementById("profileInitial")
+                img.src = url
+                img.style.display = "block"
+                initial.style.display = "none"
+            }
+        } catch (error) {
+            console.log("No profile image found")
+        }
+    }
+    
+    async function uploadProfileImage(userId) {
+        if (!selectedImageFile) return true
+        
+        const file = selectedImageFile
+        
+        // Validate file type
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+        if (!allowedTypes.includes(file.type)) {
+            showToast("❌ Invalid file type. Use JPG, PNG, GIF, or WEBP", "error")
+            return false
+        }
+        
+        // Validate file size (2MB max)
+        if (file.size > 2 * 1024 * 1024) {
+            showToast("❌ File too large! Maximum 2MB", "error")
+            return false
+        }
+        
+        try {
+            const { error: uploadError } = await supabase
+                .storage
+                .from(BUCKET_NAME)
+                .upload(`${userId}/profile.jpg`, file, {
+                    cacheControl: '3600',
+                    upsert: true,
+                    contentType: file.type
+                })
+            
+            if (uploadError) {
+                console.error("Upload error:", uploadError)
+                showToast("❌ Failed to upload image", "error")
+                return false
+            }
+            
+            showToast("✅ Profile image updated!", "success")
+            return true
+        } catch (err) {
+            console.error("Upload error:", err)
+            showToast("❌ Failed to upload image", "error")
+            return false
+        }
+    }
+    
+    async function updateProfile() {
+        const fullName = document.getElementById('fullName').value.trim()
+        const mobile = document.getElementById('mobile').value.trim()
+        const currentPassword = document.getElementById('currentPassword').value
+        const newPassword = document.getElementById('newPassword').value
+        const confirmPassword = document.getElementById('confirmPassword').value
+        
+        let hasError = false
+        
+        // Validate name
+        if (!fullName) {
+            document.getElementById('nameError').textContent = "Full name is required"
+            document.getElementById('nameError').style.display = "block"
+            document.getElementById('fullName').classList.add('error')
+            hasError = true
+        } else if (!/^[A-Za-z\s]+$/.test(fullName)) {
+            document.getElementById('nameError').textContent = "Name should contain only letters"
+            document.getElementById('nameError').style.display = "block"
+            document.getElementById('fullName').classList.add('error')
+            hasError = true
+        } else {
+            document.getElementById('nameError').style.display = "none"
+            document.getElementById('fullName').classList.remove('error')
+        }
+        
+        // Validate mobile (optional but if provided must be valid)
+        if (mobile && (mobile.length !== 10 || !/^[6-9]\d{9}$/.test(mobile))) {
+            document.getElementById('mobileError').textContent = "Enter a valid 10-digit Indian mobile number"
+            document.getElementById('mobileError').style.display = "block"
+            document.getElementById('mobile').classList.add('error')
+            hasError = true
+        } else {
+            document.getElementById('mobileError').style.display = "none"
+            document.getElementById('mobile').classList.remove('error')
+        }
+        
+        // Validate password change (if any password field is filled)
+        const isPasswordChangeAttempt = currentPassword || newPassword || confirmPassword
+        
+        if (isPasswordChangeAttempt) {
+            if (!currentPassword) {
+                document.getElementById('currentPassError').textContent = "Current password is required to change password"
+                document.getElementById('currentPassError').style.display = "block"
+                document.getElementById('currentPassword').classList.add('error')
+                hasError = true
+            } else {
+                document.getElementById('currentPassError').style.display = "none"
+                document.getElementById('currentPassword').classList.remove('error')
+            }
+            
+            if (!newPassword) {
+                document.getElementById('newPassError').textContent = "New password is required"
+                document.getElementById('newPassError').style.display = "block"
+                document.getElementById('newPassword').classList.add('error')
+                hasError = true
+            } else if (newPassword.length < 6) {
+                document.getElementById('newPassError').textContent = "Password must be at least 6 characters"
+                document.getElementById('newPassError').style.display = "block"
+                document.getElementById('newPassword').classList.add('error')
+                hasError = true
+            } else {
+                document.getElementById('newPassError').style.display = "none"
+                document.getElementById('newPassword').classList.remove('error')
+            }
+            
+            if (newPassword !== confirmPassword) {
+                document.getElementById('confirmPassError').textContent = "Passwords do not match"
+                document.getElementById('confirmPassError').style.display = "block"
+                document.getElementById('confirmPassword').classList.add('error')
+                hasError = true
+            } else {
+                document.getElementById('confirmPassError').style.display = "none"
+                document.getElementById('confirmPassword').classList.remove('error')
+            }
+        }
+        
+        if (hasError) return
+        
+        const btn = document.getElementById('saveBtn')
+        btn.disabled = true
+        btn.innerHTML = '<span class="loading-spinner"></span> Saving...'
+        document.getElementById('loading').style.display = 'flex'
+        
+        try {
+            // Update user metadata (name and mobile)
+            const { error: updateError } = await supabase.auth.updateUser({
+                data: {
+                    full_name: fullName,
+                    mobile: mobile
+                }
+            })
+            
+            if (updateError) {
+                throw new Error(updateError.message)
+            }
+            
+            // Update password if requested
+            if (newPassword) {
+                // Verify current password first by trying to sign in
+                const { error: signInError } = await supabase.auth.signInWithPassword({
+                    email: currentUser.email,
+                    password: currentPassword
+                })
+                
+                if (signInError) {
+                    showToast("❌ Current password is incorrect", "error")
+                    throw new Error("Invalid current password")
+                }
+                
+                const { error: passwordError } = await supabase.auth.updateUser({
+                    password: newPassword
+                })
+                
+                if (passwordError) {
+                    throw new Error(passwordError.message)
+                }
+            }
+            
+            // Upload profile image if selected
+            await uploadProfileImage(currentUser.id)
+            
+            showToast("✅ Profile updated successfully!", "success")
+            
+            // Clear password fields
+            document.getElementById('currentPassword').value = ''
+            document.getElementById('newPassword').value = ''
+            document.getElementById('confirmPassword').value = ''
+            
+            // Reload user data
+            await loadUserData()
+            
+        } catch (err) {
+            console.error("Update error:", err)
+            showToast("❌ " + err.message, "error")
+        } finally {
+            btn.disabled = false
+            btn.innerHTML = '💾 Save Changes'
+            document.getElementById('loading').style.display = 'none'
+        }
+    }
+    
+    // Image upload handler
+    document.getElementById('profileUpload').addEventListener('change', function(event) {
+        const file = event.target.files[0]
+        if (!file) return
+        
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+        if (!allowedTypes.includes(file.type)) {
+            showToast("❌ Invalid file type. Use JPG, PNG, GIF, or WEBP", "error")
+            return
+        }
+        
+        if (file.size > 2 * 1024 * 1024) {
+            showToast("❌ File too large! Maximum 2MB", "error")
+            return
+        }
+        
+        selectedImageFile = file
+        
+        // Preview image
+        const reader = new FileReader()
+        reader.onload = function(e) {
+            const img = document.getElementById("profileImg")
+            const initial = document.getElementById("profileInitial")
+            img.src = e.target.result
+            img.style.display = "block"
+            initial.style.display = "none"
+        }
+        reader.readAsDataURL(file)
+        
+        showToast("📸 Image selected. Click Save to upload.", "success")
+    })
+    
+    // Clear errors on input
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.classList.remove('error')
+            const errorId = this.id + 'Error'
+            const errorEl = document.getElementById(errorId)
+            if (errorEl) errorEl.style.display = 'none'
+        })
+    })
+    
+    document.getElementById('saveBtn').addEventListener('click', updateProfile)
+    
+    // Menu functions
+    function openMenuOnly() {
+        document.getElementById('menu').classList.add('active')
+        document.getElementById('overlay').classList.add('active')
+        document.body.classList.add('menu-open')
+        document.body.style.top = `-${window.scrollY}px`
+    }
+
+    function closeMenuOnly() {
+        document.getElementById('menu').classList.remove('active')
+        document.getElementById('overlay').classList.remove('active')
+        document.body.classList.remove('menu-open')
+        const scrollY = document.body.style.top
+        document.body.style.top = ''
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+    }
+
+    function showLogout() {
+        document.getElementById('logoutPopup').style.display = 'flex'
+        closeMenuOnly()
+    }
+
+    function closeLogout() {
+        document.getElementById('logoutPopup').style.display = 'none'
+    }
+
+    window.confirmLogout = async function() {
+        document.getElementById('logoutPopup').style.display = 'none'
+        await supabase.auth.signOut()
+        localStorage.removeItem('hasAccount')
+        localStorage.removeItem('rememberMe')
+        localStorage.removeItem('rememberedEmail')
+        window.location.replace('login.html')
+    }
+    
+    document.getElementById('menuBtn').addEventListener('click', openMenuOnly)
+    document.getElementById('closeMenuBtn').addEventListener('click', closeMenuOnly)
+    document.getElementById('backToDashboard').addEventListener('click', () => {
+        window.location.href = 'dashboard.html'
+    })
+    
+    // Initialize
+    protectPage().then(() => loadUserData())
+</script>
+
+</body>
+</html>

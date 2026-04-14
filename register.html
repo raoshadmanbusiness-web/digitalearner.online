@@ -337,7 +337,7 @@
       <span id="profileInitial">👤</span>
     </div>
     <div class="camera-icon" onclick="document.getElementById('profileUpload').click()">📷</div>
-    <input type="file" id="profileUpload" accept="image/*" onchange="uploadProfileImage(event)" style="display: none;">
+    <input type="file" id="profileUpload" accept="image/jpeg,image/png,image/gif,image/webp" onchange="uploadProfileImage(event)" style="display: none;">
     
     <h2>Register With Us</h2>
     <div class="subtitle">Zero Investment • Lifetime Free</div>
@@ -400,6 +400,7 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 const BUCKET_NAME = "profile-images"
 let tempImageFile = null
+let tempImageFileName = null
 
 async function checkUser(){
   const { data:{ session } } = await supabase.auth.getSession()
@@ -420,23 +421,35 @@ window.getSponsor = () => {
   window.location.href = "https://wa.me/917217392800?text=Hello%20I%20need%20Sponsor%20ID";
 }
 
+// ==================== IMPROVED IMAGE UPLOAD VALIDATION ====================
 window.uploadProfileImage = async function(event) {
   const file = event.target.files[0]
   if (!file) return
   
+  // Allowed file types
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+  const maxSizeMB = 2
+  const maxSizeBytes = maxSizeMB * 1024 * 1024
+  
+  // Check file type
+  if (!allowedTypes.includes(file.type)) {
+    alert(`❌ Invalid file type!\n\nSupported formats: JPG, PNG, GIF, WEBP\n\nPlease select a valid image file.`)
+    document.getElementById('profileUpload').value = ''
+    return
+  }
+  
+  // Check file size
+  if (file.size > maxSizeBytes) {
+    const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2)
+    alert(`❌ File too large!\n\nYour file: ${fileSizeMB}MB\nMaximum allowed: ${maxSizeMB}MB\n\nPlease compress your image or choose a smaller one.`)
+    document.getElementById('profileUpload').value = ''
+    return
+  }
+  
   document.getElementById("loading").style.display = "flex"
   
   try {
-    if (!file.type.startsWith('image/')) {
-      alert("Please upload an image file")
-      return
-    }
-    
-    if (file.size > 2 * 1024 * 1024) {
-      alert("Image size should be less than 2MB")
-      return
-    }
-    
     const reader = new FileReader()
     reader.onload = function(e) {
       const img = document.getElementById("profileImg")
@@ -448,9 +461,15 @@ window.uploadProfileImage = async function(event) {
     reader.readAsDataURL(file)
     
     tempImageFile = file
+    tempImageFileName = file.name
+    
+    // Show success message briefly
+    const fileName = file.name.length > 30 ? file.name.substring(0, 27) + '...' : file.name
+    alert(`✅ Image selected successfully!\n\n📸 ${fileName}\n📦 Size: ${(file.size / 1024).toFixed(1)}KB\n\nImage will be uploaded after registration.`)
     
   } catch (error) {
-    alert("Failed to upload image")
+    console.error("Image read error:", error)
+    alert("❌ Failed to read image file. Please try again.")
   } finally {
     document.getElementById("loading").style.display = "none"
   }
@@ -661,11 +680,12 @@ document.getElementById("regBtn").addEventListener("click", async () => {
   })
 
   if(error){
-    alert(error.message)
+    alert("❌ Registration failed: " + error.message)
     document.getElementById("loading").style.display = "none"
     return
   }
 
+  // Upload profile image if selected (optional)
   if (tempImageFile && data.user) {
     try {
       const { error: uploadError } = await supabase
@@ -679,6 +699,7 @@ document.getElementById("regBtn").addEventListener("click", async () => {
       
       if (uploadError) {
         console.error("Image upload failed:", uploadError)
+        // Don't block registration if image upload fails
       } else {
         tempImageFile = null
       }
@@ -689,6 +710,8 @@ document.getElementById("regBtn").addEventListener("click", async () => {
 
   document.getElementById("loading").style.display = "none"
   localStorage.setItem('hasAccount', 'true')
+  
+  alert("✅ Registration successful! Welcome to Digital Earner 🎉\n\nYou can now login and start earning.")
   window.location.replace("dashboard.html")
 })
 

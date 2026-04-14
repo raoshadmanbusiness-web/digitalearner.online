@@ -37,85 +37,85 @@
         }
 
         .header-container {
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+            position: relative;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-.header-bg {
-    background: #e0e5ec;
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-    border-radius: 0 0 20px 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    z-index: 1;
-}
+        .header-bg {
+            background: #e0e5ec;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 1;
+        }
 
-.header-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 20px;
-    height: 70px;
-}
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 20px;
+            height: 70px;
+        }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.logo-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    position: relative;
-    top: -3px;
-    left: -10px;
-}
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            top: -3px;
+            left: -10px;
+        }
 
-.brand-text {
-    font-size: 22px;
-    font-weight: 800;
-    color: #1e40af;
-    text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-    white-space: nowrap;
-    position: relative;
-    top: 0px;
-    left: -15px;
-}
+        .brand-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e40af;
+            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            white-space: nowrap;
+            position: relative;
+            top: 0px;
+            left: -15px;
+        }
 
-.menu-btn {
-    width: 40px;
-    height: 40px;
-    background: #e0e5ec;
-    border: none;
-    border-radius: 10px;
-    color: #4f46e5;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-    transition: .2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    top: 0px;
-    right: -8px;
-    z-index: 3;
-    padding: 0;
-}
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #4f46e5;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: 0px;
+            right: -8px;
+            z-index: 3;
+            padding: 0;
+        }
 
-.menu-btn:active {
-    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
-}
+        .menu-btn:active {
+            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+        }
 
         .overlay {
             position: fixed;
@@ -242,6 +242,31 @@
             transition: all 0.3s ease;
             width: 100%;
             margin: 0 auto;
+            position: relative;
+        }
+
+        /* Settings Icon */
+        .settings-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 32px;
+            height: 32px;
+            background: #e0e5ec;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            transition: 0.2s;
+            font-size: 16px;
+            color: #4f46e5;
+            z-index: 10;
+        }
+
+        .settings-icon:active {
+            box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
         }
 
         .profile-image-wrapper {
@@ -762,6 +787,11 @@
 <div class="admin-container">
     
     <div class="profile-card">
+        <!-- Settings Icon -->
+        <div class="settings-icon" onclick="openSettings()">
+            ⚙️
+        </div>
+        
         <div class="profile-image-wrapper">
             <div class="profile-image-border">
                 <div class="profile-image">
@@ -812,6 +842,8 @@
             </div>
         </div>
     </div>
+    
+    <!-- Referral Stats Box REMOVED - Already showing in stats cards above -->
     
     <div class="earning-card">
         <div class="card-header">
@@ -920,44 +952,86 @@
     const BUCKET_NAME = "profile-images"
     const TARGET_TASKS = 50
     
+    // Function to hide email (show only first 3 chars + stars)
+    function hideEmail(email) {
+        if (!email) return '---'
+        const atIndex = email.indexOf('@')
+        if (atIndex <= 3) {
+            return email.substring(0, 2) + '****' + email.substring(atIndex)
+        }
+        const firstPart = email.substring(0, 3)
+        const lastPart = email.substring(atIndex)
+        return firstPart + '****' + lastPart
+    }
+    
+    // Open settings page
+    window.openSettings = function() {
+        window.location.href = 'settings.html'
+    }
+    
     async function protectPage() {
         const { data } = await supabase.auth.getSession()
         if (!data.session) {
             window.location.replace("login.html")
+            return false
         }
-        return data.session
+        return true
     }
     
     async function loadRealData() {
-        const session = await protectPage()
+        const isLoggedIn = await protectPage()
+        if (!isLoggedIn) return
         
-        if (session) {
-            const user = session.user
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
             const email = user.email
             const name = user.user_metadata?.full_name || email.split('@')[0]
             
             document.getElementById("userName").textContent = name
-            document.getElementById("userEmail").textContent = email
+            // Show hidden email
+            document.getElementById("userEmail").textContent = hideEmail(email)
             
             await loadProfileImage(user.id)
             
+            // ==================== REFERRAL STATS ====================
             const { data: referrals, error } = await supabase
                 .from('referrals')
-                .select('status')
+                .select('status, commission_amount')
                 .eq('referrer_id', user.id)
             
-            if (error) {
+            if (!error && referrals) {
+                const totalReferrals = referrals.length
+                const successfulReferrals = referrals.filter(r => r.status === 'success').length
+                const pendingReferrals = referrals.filter(r => r.status === 'pending').length
+                
+                // For task progress (success count is the number of successful referrals)
+                const successCount = successfulReferrals
+                const pendingCount = pendingReferrals
+                const rejectCount = totalReferrals - successCount - pendingCount
+                
+                document.getElementById('successCount').textContent = successCount
+                document.getElementById('pendingCount').textContent = pendingCount
+                document.getElementById('rejectCount').textContent = rejectCount
+                
+                const percent = (successCount / TARGET_TASKS) * 100
+                const remaining = TARGET_TASKS - successCount
+                
+                document.getElementById('taskProgressCurrent').textContent = successCount
+                document.getElementById('taskRemainingHint').textContent = remaining > 0 ? remaining : 0
+                document.getElementById('taskProgressFill').style.width = Math.min(percent, 100) + '%'
+                
+                if (successCount >= TARGET_TASKS) {
+                    document.getElementById('taskRewardMessage').style.display = 'block'
+                    document.getElementById('taskRewardHint').style.display = 'none'
+                } else {
+                    document.getElementById('taskRewardMessage').style.display = 'none'
+                    document.getElementById('taskRewardHint').style.display = 'block'
+                }
+            } else {
                 console.error("Error loading referrals:", error)
             }
             
-            const successCount = referrals?.filter(r => r.status === 'success').length || 0
-            const pendingCount = referrals?.filter(r => r.status === 'pending').length || 0
-            const rejectCount = referrals?.filter(r => r.status === 'rejected').length || 0
-            
-            document.getElementById('successCount').textContent = successCount
-            document.getElementById('pendingCount').textContent = pendingCount
-            document.getElementById('rejectCount').textContent = rejectCount
-            
+            // ==================== EARNINGS DATA ====================
             const { data: earnings } = await supabase
                 .from('user_earnings')
                 .select('*')
@@ -969,21 +1043,6 @@
                 document.getElementById('weekEarn').innerHTML = `<span>₹</span>${earnings.week_earnings || 0}`
                 document.getElementById('monthEarn').innerHTML = `<span>₹</span>${earnings.month_earnings || 0}`
                 document.getElementById('totalEarn').innerHTML = `<span>₹</span>${earnings.total_earnings || 0}`
-            }
-            
-            const percent = (successCount / TARGET_TASKS) * 100
-            const remaining = TARGET_TASKS - successCount
-            
-            document.getElementById('taskProgressCurrent').textContent = successCount
-            document.getElementById('taskRemainingHint').textContent = remaining > 0 ? remaining : 0
-            document.getElementById('taskProgressFill').style.width = Math.min(percent, 100) + '%'
-            
-            if (successCount >= TARGET_TASKS) {
-                document.getElementById('taskRewardMessage').style.display = 'block'
-                document.getElementById('taskRewardHint').style.display = 'none'
-            } else {
-                document.getElementById('taskRewardMessage').style.display = 'none'
-                document.getElementById('taskRewardHint').style.display = 'block'
             }
         }
     }

@@ -20,177 +20,8 @@
             overflow-x: hidden;
         }
 
-        body.menu-open {
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-        }
-
-        .header-container {
-            position: relative;
-            width: 100%;
-        }
-
-        .header-bg {
-            background: #e0e5ec;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-            border-radius: 0 0 20px 20px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            z-index: 1;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 20px;
-            height: 70px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .brand-text {
-            font-size: 22px;
-            font-weight: 800;
-            color: #1e40af;
-            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-            white-space: nowrap;
-        }
-
-        .menu-btn {
-            width: 40px;
-            height: 40px;
-            background: #e0e5ec;
-            border: none;
-            border-radius: 10px;
-            color: #4f46e5;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-            z-index: 999;
-            pointer-events: none;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: none;
-        }
-
-        .menu-container {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 280px;
-            background: #e0e5ec;
-            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 1000;
-            padding: 20px 15px;
-            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-            border-radius: 25px 0 0 25px;
-            max-height: 100vh;
-            overflow-y: auto;
-        }
-
-        .menu-container.active {
-            right: 0;
-        }
-
-        .menu-items {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .menu-box {
-            background: #e0e5ec;
-            border-radius: 12px;
-            padding: 10px 15px;
-            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-            transition: 0.3s;
-        }
-
-        .menu-box.digital-box {
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .digital-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #e67e22;
-            text-shadow: 2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff;
-            white-space: nowrap;
-        }
-
-        .close-btn {
-            width: 36px;
-            height: 36px;
-            background: #e0e5ec;
-            border: none;
-            border-radius: 10px;
-            color: #ef4444;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
-
-        .menu-link {
-            display: block;
-            font-size: 16px;
-            font-weight: 600;
-            color: #333333;
-            text-decoration: none;
-            padding: 8px 5px;
-            border-radius: 6px;
-            transition: 0.2s;
-            cursor: pointer;
-        }
-
         .admin-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 20px auto;
             padding: 15px 20px;
         }
@@ -202,6 +33,53 @@
             margin-bottom: 20px;
             text-align: center;
         }
+
+        /* Summary Card Styles */
+        .summary-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+        }
+
+        .summary-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .summary-value.pending { color: #f59e0b; }
+        .summary-value.approved { color: #10b981; }
+        .summary-value.rejected { color: #ef4444; }
 
         .claims-list {
             display: flex;
@@ -236,6 +114,16 @@
             color: #94a3b8;
         }
 
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #fef3c7;
+            color: #d97706;
+        }
+
         .claim-details {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -260,6 +148,21 @@
             font-weight: 600;
             color: #1e293b;
             margin-top: 2px;
+        }
+
+        .referred-section {
+            background: #f0fdf4;
+            border-radius: 12px;
+            padding: 12px;
+            margin: 10px 0;
+            border-left: 3px solid #10b981;
+        }
+
+        .referred-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #059669;
+            margin-bottom: 8px;
         }
 
         .screenshot-link {
@@ -305,32 +208,10 @@
             cursor: not-allowed;
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-pending {
-            background: #fef3c7;
-            color: #d97706;
-        }
-
         .no-claims {
             text-align: center;
             padding: 50px;
             color: #64748b;
-        }
-
-        .footer {
-            background: #0f172a;
-            color: #e2e8f0;
-            text-align: center;
-            padding: 18px 20px;
-            margin-top: 30px;
-            font-size: 12px;
         }
 
         .loading-spinner {
@@ -347,57 +228,64 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            text-align: center;
+            z-index: 3000;
+            animation: slideUp 0.3s ease;
+            display: none;
+        }
+        .toast-message.success { background: #10b981; }
+        .toast-message.error { background: #ef4444; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
-<div class="overlay" id="overlay"></div>
-
-<div class="menu-container" id="menu">
-    <div class="menu-items">
-        <div class="menu-box digital-box">
-            <span class="digital-title">Digital Earner</span>
-            <button class="close-btn" onclick="closeMenuOnly()">✕</button>
-        </div>
-        <div class="menu-box" onclick="goToDashboard()">
-            <span class="menu-link">← Back to Dashboard</span>
-        </div>
-        <div class="menu-box">
-            <a href="index.html" class="menu-link">🏠 Home</a>
-        </div>
-        <div class="menu-box">
-            <a href="about.html" class="menu-link">📖 About Us</a>
-        </div>
-        <div class="menu-box">
-            <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
-        </div>
-        <div class="menu-box">
-            <span class="menu-link" onclick="confirmLogout()">🚪 Logout</span>
-        </div>
-    </div>
-</div>
-
-<div class="header-container">
-    <div class="header-bg"></div>
-    <div class="header-content">
-        <div class="header-left">
-            <img src="logo.png" alt="Logo" class="logo-img">
-            <span class="brand-text">Digital Earner</span>
-        </div>
-        <button class="menu-btn" onclick="openMenuOnly()">☰</button>
-    </div>
-</div>
-
 <div class="admin-container">
-    <div class="admin-title">📋 Pending Claims</div>
+    <div class="admin-title">📋 Claims Management</div>
+    
+    <!-- Summary Card -->
+    <div class="summary-card" id="summaryCard" style="display: none;">
+        <div class="summary-title">📊 CLAIMS SUMMARY</div>
+        <div class="summary-grid">
+            <div class="summary-item">
+                <div class="summary-label">Pending</div>
+                <div class="summary-value pending" id="pendingAmount">₹0</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Approved</div>
+                <div class="summary-value approved" id="approvedAmount">₹0</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Rejected</div>
+                <div class="summary-value rejected" id="rejectedAmount">₹0</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Total Claims</div>
+                <div class="summary-value" id="totalClaims">0</div>
+            </div>
+        </div>
+    </div>
+    
     <div id="claimsList" class="claims-list">
         <div style="text-align: center; padding: 40px;">Loading claims...</div>
     </div>
 </div>
 
-<div class="footer">
-    © 2026 Digital Earner · Admin Panel · All rights reserved
-</div>
+<div id="toastMessage" class="toast-message"></div>
 
 <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
@@ -406,20 +294,81 @@
     const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
     const supabase = createClient(supabaseUrl, supabaseKey)
     
-    const ADMIN_EMAIL = "digitalearner.business@gmail.com"
+    // Admin email (private)
+    const ADMIN_EMAIL = "raoshadman.business@gmail.com"
     
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toastMessage')
+        toast.textContent = message
+        toast.className = `toast-message ${type}`
+        toast.style.display = 'block'
+        setTimeout(() => {
+            toast.style.display = 'none'
+        }, 3000)
+    }
+    
+    // ==================== SECURITY: Check Admin from admins table ====================
     async function checkAdmin() {
         const { data: { user } } = await supabase.auth.getUser()
         if (!user) {
             window.location.href = "login.html"
             return false
         }
-        if (user.email !== ADMIN_EMAIL) {
-            alert("Access denied. Admin only.")
+        
+        const { data: adminData, error } = await supabase
+            .from('admins')
+            .select('email')
+            .eq('email', user.email)
+            .single()
+        
+        if (error || !adminData) {
+            alert("⛔ ACCESS DENIED!\n\nThis page is for authorized admins only.")
             window.location.href = "dashboard.html"
             return false
         }
+        
         return true
+    }
+    
+    // ==================== LOAD SUMMARY STATS ====================
+    async function loadSummary() {
+        const { data: allClaims, error } = await supabase
+            .from('claim_requests')
+            .select('status, amount')
+        
+        if (error) {
+            console.error("Error loading summary:", error)
+            return
+        }
+        
+        let pendingTotal = 0
+        let approvedTotal = 0
+        let rejectedTotal = 0
+        let pendingCount = 0
+        let approvedCount = 0
+        let rejectedCount = 0
+        
+        const claimAmount = 100
+        
+        for (const claim of allClaims) {
+            if (claim.status === 'pending') {
+                pendingTotal += claimAmount
+                pendingCount++
+            } else if (claim.status === 'approved') {
+                approvedTotal += claimAmount
+                approvedCount++
+            } else if (claim.status === 'rejected') {
+                rejectedTotal += claimAmount
+                rejectedCount++
+            }
+        }
+        
+        document.getElementById('pendingAmount').innerHTML = `₹${pendingTotal.toLocaleString()}`
+        document.getElementById('approvedAmount').innerHTML = `₹${approvedTotal.toLocaleString()}`
+        document.getElementById('rejectedAmount').innerHTML = `₹${rejectedTotal.toLocaleString()}`
+        document.getElementById('totalClaims').textContent = allClaims.length
+        
+        document.getElementById('summaryCard').style.display = 'block'
     }
     
     async function loadClaims() {
@@ -440,11 +389,10 @@
         for (const claim of claims) {
             const date = new Date(claim.submitted_at).toLocaleString()
             
-            // Extract filename from URL to delete later
             let screenshotPath = null
             if (claim.proof_screenshot) {
                 const urlParts = claim.proof_screenshot.split('/')
-                screenshotPath = urlParts.slice(-2).join('/') // claims/filename.jpg
+                screenshotPath = urlParts.slice(-2).join('/')
             }
             
             html += `
@@ -452,19 +400,19 @@
                     <div class="claim-header">
                         <span class="claim-id">#${claim.id}</span>
                         <span class="claim-date">${date}</span>
-                        <span class="status-badge status-pending">Pending</span>
+                        <span class="status-badge">PENDING</span>
                     </div>
                     <div class="claim-details">
                         <div class="detail-item">
-                            <span class="detail-label">Name</span>
+                            <span class="detail-label">Claimant Name</span>
                             <span class="detail-value">${escapeHtml(claim.user_name)}</span>
                         </div>
                         <div class="detail-item">
-                            <span class="detail-label">Email</span>
+                            <span class="detail-label">Claimant Email</span>
                             <span class="detail-value">${escapeHtml(claim.user_email)}</span>
                         </div>
                         <div class="detail-item">
-                            <span class="detail-label">Mobile</span>
+                            <span class="detail-label">Claimant Mobile</span>
                             <span class="detail-value">${escapeHtml(claim.user_mobile)}</span>
                         </div>
                         <div class="detail-item">
@@ -472,9 +420,26 @@
                             <span class="detail-value">${escapeHtml(claim.broker_name)}</span>
                         </div>
                     </div>
+                    <div class="referred-section">
+                        <div class="referred-title">🎯 Referred User Details (जिसके लिए claim किया)</div>
+                        <div class="claim-details" style="margin-bottom: 0;">
+                            <div class="detail-item">
+                                <span class="detail-label">Name</span>
+                                <span class="detail-value">${escapeHtml(claim.referred_name) || '—'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Mobile</span>
+                                <span class="detail-value">${escapeHtml(claim.referred_mobile) || '—'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Email</span>
+                                <span class="detail-value">${escapeHtml(claim.referred_email) || '—'}</span>
+                            </div>
+                        </div>
+                    </div>
                     ${claim.proof_screenshot ? `<a href="${claim.proof_screenshot}" target="_blank" class="screenshot-link">📸 View Screenshot</a>` : '<div class="screenshot-link" style="opacity:0.5;">📸 No screenshot</div>'}
                     <div class="action-buttons">
-                        <button class="approve-btn" onclick="approveClaim(${claim.id}, '${claim.user_id}', '${screenshotPath || ''}')">✅ Approve</button>
+                        <button class="approve-btn" onclick="approveClaim(${claim.id}, '${claim.user_id}', '${screenshotPath || ''}', '${escapeHtml(claim.referred_email) || ''}', '${escapeHtml(claim.referred_name) || ''}', '${escapeHtml(claim.referred_mobile) || ''}')">✅ Approve & Add ₹100</button>
                         <button class="reject-btn" onclick="rejectClaim(${claim.id}, '${screenshotPath || ''}')">❌ Reject</button>
                     </div>
                 </div>
@@ -493,7 +458,6 @@
         })
     }
     
-    // Delete screenshot from storage
     async function deleteScreenshot(filePath) {
         if (!filePath) return true
         try {
@@ -508,8 +472,8 @@
         }
     }
     
-    window.approveClaim = async function(claimId, userId, screenshotPath) {
-        if (!confirm("Approve this claim? ₹100 will be added to user's wallet.")) return
+    window.approveClaim = async function(claimId, claimantUserId, screenshotPath, referredEmail, referredName, referredMobile) {
+        if (!confirm("✅ Confirm: Approve this claim? ₹100 will be added to claimant's wallet.")) return
         
         const btn = document.querySelector(`#claim-${claimId} .approve-btn`)
         const rejectBtn = document.querySelector(`#claim-${claimId} .reject-btn`)
@@ -520,87 +484,82 @@
         if (rejectBtn) rejectBtn.disabled = true
         
         try {
-            // Update claim status
+            // ==================== SECURITY: Verify admin ====================
+            const { data: { user } } = await supabase.auth.getUser()
+            const { data: adminCheck } = await supabase
+                .from('admins')
+                .select('email')
+                .eq('email', user.email)
+                .single()
+            
+            if (!adminCheck) {
+                throw new Error("Unauthorized access")
+            }
+            
+            // ==================== SAFE: Add ₹100 using Supabase Function (Server-side) ====================
+            const { data: earningsResult, error: earningsError } = await supabase.rpc('add_earnings_safe', {
+                p_user_id: claimantUserId,
+                p_amount: 100,
+                p_reason: 'claim_approval'
+            })
+            
+            if (earningsError) {
+                console.error("Earnings function error:", earningsError)
+                throw new Error("Failed to add earnings: " + earningsError.message)
+            }
+            
+            if (!earningsResult || !earningsResult.success) {
+                throw new Error(earningsResult?.message || "Failed to add earnings")
+            }
+            
+            // ==================== Save referral record ====================
+            if (referredEmail && referredEmail !== '') {
+                await supabase
+                    .from('referrals')
+                    .insert({
+                        referrer_id: claimantUserId,
+                        referred_user_email: referredEmail,
+                        referred_user_name: referredName || '',
+                        referred_user_mobile: referredMobile || '',
+                        broker_name: 'Broker',
+                        commission_amount: 100,
+                        status: 'success',
+                        completed_at: new Date().toISOString()
+                    })
+            }
+            
+            // ==================== Update claim status ====================
             await supabase
                 .from('claim_requests')
                 .update({ status: 'approved', reviewed_at: new Date().toISOString() })
                 .eq('id', claimId)
             
-            // Add ₹100 to user's earnings
-            const { data: earnings, error: earningsError } = await supabase
-    .from('user_earnings')
-    .select('*')
-    .eq('user_id', userId)
-    .single()
-
-if (earningsError && earningsError.code === 'PGRST116') {
-    // ❗ user ka record exist nahi karta → create new
-    await supabase.from('user_earnings').insert({
-        user_id: userId,
-        today_earnings: 100,
-        week_earnings: 100,
-        month_earnings: 100,
-        total_earnings: 100,
-        available_balance: 100
-    })
-} else if (earnings) {
-    // ✅ already exist → update
-    await supabase
-        .from('user_earnings')
-        .update({
-            today_earnings: (earnings.today_earnings || 0) + 100,
-            week_earnings: (earnings.week_earnings || 0) + 100,
-            month_earnings: (earnings.month_earnings || 0) + 100,
-            total_earnings: (earnings.total_earnings || 0) + 100,
-            available_balance: (earnings.available_balance || 0) + 100
-        })
-        .eq('user_id', userId)
-}
-            
-            if (earnings) {
-                await supabase
-                    .from('user_earnings')
-                    .update({
-                        today_earnings: (earnings.today_earnings || 0) + 100,
-                        week_earnings: (earnings.week_earnings || 0) + 100,
-                        month_earnings: (earnings.month_earnings || 0) + 100,
-                        total_earnings: (earnings.total_earnings || 0) + 100,
-                        available_balance: (earnings.available_balance || 0) + 100
-                    })
-                    .eq('user_id', userId)
-            }
-            
-            // Update referral status to success
-            await supabase
-                .from('referrals')
-                .update({ status: 'success', completed_at: new Date().toISOString() })
-                .eq('referred_user_id', userId)
-                .eq('status', 'pending')
-            
-            // Delete screenshot from storage (free space)
+            // ==================== Delete screenshot from storage ====================
             await deleteScreenshot(screenshotPath)
             
-            // Delete claim record from database
+            // ==================== Delete claim record ====================
             await supabase
                 .from('claim_requests')
                 .delete()
                 .eq('id', claimId)
             
-            alert("✅ Claim approved! ₹100 added. Record deleted.")
+            showToast("✅ Claim approved! ₹100 added to claimant's wallet.", "success")
+            loadSummary()
             loadClaims()
             
         } catch (err) {
-            alert("Error approving claim")
+            console.error("Approve error:", err)
+            showToast("Error approving claim: " + err.message, "error")
             if (btn) {
                 btn.disabled = false
-                btn.innerHTML = '✅ Approve'
+                btn.innerHTML = '✅ Approve & Add ₹100'
             }
             if (rejectBtn) rejectBtn.disabled = false
         }
     }
     
     window.rejectClaim = async function(claimId, screenshotPath) {
-        if (!confirm("Reject this claim? Screenshot will be deleted.")) return
+        if (!confirm("❌ Reject this claim? Screenshot will be deleted.")) return
         
         const btn = document.querySelector(`#claim-${claimId} .reject-btn`)
         const approveBtn = document.querySelector(`#claim-${claimId} .approve-btn`)
@@ -611,27 +570,31 @@ if (earningsError && earningsError.code === 'PGRST116') {
         if (approveBtn) approveBtn.disabled = true
         
         try {
-            // Delete screenshot from storage
+            const { data: { user } } = await supabase.auth.getUser()
+            const { data: adminCheck } = await supabase
+                .from('admins')
+                .select('email')
+                .eq('email', user.email)
+                .single()
+            
+            if (!adminCheck) {
+                throw new Error("Unauthorized access")
+            }
+            
             await deleteScreenshot(screenshotPath)
             
-            // Delete claim record from database
             await supabase
                 .from('claim_requests')
                 .delete()
                 .eq('id', claimId)
             
-            // Update referral status to rejected
-            await supabase
-                .from('referrals')
-                .update({ status: 'rejected', rejected_at: new Date().toISOString() })
-                .eq('referred_user_id', claimId)
-                .eq('status', 'pending')
-            
-            alert("❌ Claim rejected. Record deleted.")
+            showToast("❌ Claim rejected. Record deleted.", "success")
+            loadSummary()
             loadClaims()
             
         } catch (err) {
-            alert("Error rejecting claim")
+            console.error("Reject error:", err)
+            showToast("Error rejecting claim: " + err.message, "error")
             if (btn) {
                 btn.disabled = false
                 btn.innerHTML = '❌ Reject'
@@ -640,34 +603,16 @@ if (earningsError && earningsError.code === 'PGRST116') {
         }
     }
     
-    function openMenuOnly() {
-        document.getElementById('menu').classList.add('active')
-        document.getElementById('overlay').classList.add('active')
-        document.body.classList.add('menu-open')
-        document.body.style.top = `-${window.scrollY}px`
-    }
-
-    function closeMenuOnly() {
-        document.getElementById('menu').classList.remove('active')
-        document.getElementById('overlay').classList.remove('active')
-        document.body.classList.remove('menu-open')
-        const scrollY = document.body.style.top
-        document.body.style.top = ''
-        window.scrollTo(0, parseInt(scrollY || '0') * -1)
-    }
-
-    function goToDashboard() {
-        window.location.href = 'dashboard.html'
+    // Initialize
+    async function init() {
+        const isAdmin = await checkAdmin()
+        if (!isAdmin) return
+        
+        await loadSummary()
+        await loadClaims()
     }
     
-    window.confirmLogout = async function() {
-        if (confirm("Are you sure you want to logout?")) {
-            await supabase.auth.signOut()
-            window.location.href = 'login.html'
-        }
-    }
-    
-    checkAdmin().then(() => loadClaims())
+    init()
 </script>
 
 </body>

@@ -20,177 +20,8 @@
             overflow-x: hidden;
         }
 
-        body.menu-open {
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-        }
-
-        .header-container {
-            position: relative;
-            width: 100%;
-        }
-
-        .header-bg {
-            background: #e0e5ec;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-            border-radius: 0 0 20px 20px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            z-index: 1;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 20px;
-            height: 70px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .brand-text {
-            font-size: 22px;
-            font-weight: 800;
-            color: #1e40af;
-            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-            white-space: nowrap;
-        }
-
-        .menu-btn {
-            width: 40px;
-            height: 40px;
-            background: #e0e5ec;
-            border: none;
-            border-radius: 10px;
-            color: #4f46e5;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-            z-index: 999;
-            pointer-events: none;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: none;
-        }
-
-        .menu-container {
-            position: fixed;
-            top: 0;
-            right: -300px;
-            width: 280px;
-            background: #e0e5ec;
-            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            z-index: 1000;
-            padding: 20px 15px;
-            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
-            border-radius: 25px 0 0 25px;
-            max-height: 100vh;
-            overflow-y: auto;
-        }
-
-        .menu-container.active {
-            right: 0;
-        }
-
-        .menu-items {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .menu-box {
-            background: #e0e5ec;
-            border-radius: 12px;
-            padding: 10px 15px;
-            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-            transition: 0.3s;
-        }
-
-        .menu-box.digital-box {
-            padding: 12px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .digital-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #e67e22;
-            text-shadow: 2px 2px 4px #a3b1c6, -2px -2px 4px #ffffff;
-            white-space: nowrap;
-        }
-
-        .close-btn {
-            width: 36px;
-            height: 36px;
-            background: #e0e5ec;
-            border: none;
-            border-radius: 10px;
-            color: #ef4444;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
-
-        .menu-link {
-            display: block;
-            font-size: 16px;
-            font-weight: 600;
-            color: #333333;
-            text-decoration: none;
-            padding: 8px 5px;
-            border-radius: 6px;
-            transition: 0.2s;
-            cursor: pointer;
-        }
-
         .admin-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 20px auto;
             padding: 15px 20px;
         }
@@ -202,6 +33,53 @@
             margin-bottom: 20px;
             text-align: center;
         }
+
+        /* Summary Card Styles */
+        .summary-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+        }
+
+        .summary-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .summary-value.pending { color: #f59e0b; }
+        .summary-value.approved { color: #10b981; }
+        .summary-value.rejected { color: #ef4444; }
 
         .tabs {
             display: flex;
@@ -343,15 +221,6 @@
             color: #64748b;
         }
 
-        .footer {
-            background: #0f172a;
-            color: #e2e8f0;
-            text-align: center;
-            padding: 18px 20px;
-            margin-top: 30px;
-            font-size: 12px;
-        }
-
         .loading-spinner {
             display: inline-block;
             width: 16px;
@@ -370,45 +239,31 @@
 </head>
 <body>
 
-<div class="overlay" id="overlay"></div>
-
-<div class="menu-container" id="menu">
-    <div class="menu-items">
-        <div class="menu-box digital-box">
-            <span class="digital-title">Digital Earner</span>
-            <button class="close-btn" onclick="closeMenuOnly()">✕</button>
-        </div>
-        <div class="menu-box" onclick="goToDashboard()">
-            <span class="menu-link">← Back to Dashboard</span>
-        </div>
-        <div class="menu-box">
-            <a href="index.html" class="menu-link">🏠 Home</a>
-        </div>
-        <div class="menu-box">
-            <a href="about.html" class="menu-link">📖 About Us</a>
-        </div>
-        <div class="menu-box">
-            <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
-        </div>
-        <div class="menu-box">
-            <span class="menu-link" onclick="confirmLogout()">🚪 Logout</span>
-        </div>
-    </div>
-</div>
-
-<div class="header-container">
-    <div class="header-bg"></div>
-    <div class="header-content">
-        <div class="header-left">
-            <img src="logo.png" alt="Logo" class="logo-img">
-            <span class="brand-text">Digital Earner</span>
-        </div>
-        <button class="menu-btn" onclick="openMenuOnly()">☰</button>
-    </div>
-</div>
-
 <div class="admin-container">
     <div class="admin-title">💰 Withdrawal Requests</div>
+    
+    <!-- Summary Card -->
+    <div class="summary-card" id="summaryCard" style="display: none;">
+        <div class="summary-title">📊 WITHDRAWAL SUMMARY</div>
+        <div class="summary-grid">
+            <div class="summary-item">
+                <div class="summary-label">Pending</div>
+                <div class="summary-value pending" id="pendingAmount">₹0</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Approved</div>
+                <div class="summary-value approved" id="approvedAmount">₹0</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Rejected</div>
+                <div class="summary-value rejected" id="rejectedAmount">₹0</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Total Requests</div>
+                <div class="summary-value" id="totalRequests">0</div>
+            </div>
+        </div>
+    </div>
     
     <div class="tabs">
         <div class="tab active" data-status="pending">Pending</div>
@@ -421,10 +276,6 @@
     </div>
 </div>
 
-<div class="footer">
-    © 2026 Digital Earner · Admin Panel · All rights reserved
-</div>
-
 <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
     
@@ -432,21 +283,65 @@
     const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
     const supabase = createClient(supabaseUrl, supabaseKey)
     
-    const ADMIN_EMAIL = "digitalearner.business@gmail.com"
+    // ==================== ADMIN EMAIL (Private) ====================
+    const ADMIN_EMAIL = "raoshadman.business@gmail.com"
     let currentStatus = 'pending'
     
+    // ==================== SECURITY: Check Admin from admins table ====================
     async function checkAdmin() {
         const { data: { user } } = await supabase.auth.getUser()
         if (!user) {
             window.location.href = "login.html"
             return false
         }
-        if (user.email !== ADMIN_EMAIL) {
-            alert("Access denied. Admin only.")
+        
+        // Check if user email exists in admins table
+        const { data: adminData, error } = await supabase
+            .from('admins')
+            .select('email')
+            .eq('email', user.email)
+            .single()
+        
+        if (error || !adminData) {
+            alert("⛔ ACCESS DENIED!\n\nThis page is for authorized admins only.")
             window.location.href = "dashboard.html"
             return false
         }
+        
         return true
+    }
+    
+    // ==================== LOAD SUMMARY STATS ====================
+    async function loadSummary() {
+        const { data: allRequests, error } = await supabase
+            .from('withdrawal_requests')
+            .select('status, amount')
+        
+        if (error) {
+            console.error("Error loading summary:", error)
+            return
+        }
+        
+        let pendingTotal = 0
+        let approvedTotal = 0
+        let rejectedTotal = 0
+        
+        for (const req of allRequests) {
+            if (req.status === 'pending') {
+                pendingTotal += req.amount
+            } else if (req.status === 'approved') {
+                approvedTotal += req.amount
+            } else if (req.status === 'rejected') {
+                rejectedTotal += req.amount
+            }
+        }
+        
+        document.getElementById('pendingAmount').innerHTML = `₹${pendingTotal.toLocaleString()}`
+        document.getElementById('approvedAmount').innerHTML = `₹${approvedTotal.toLocaleString()}`
+        document.getElementById('rejectedAmount').innerHTML = `₹${rejectedTotal.toLocaleString()}`
+        document.getElementById('totalRequests').textContent = allRequests.length
+        
+        document.getElementById('summaryCard').style.display = 'block'
     }
     
     async function loadRequests() {
@@ -477,7 +372,7 @@
                     <div class="request-details">
                         <div class="detail-item">
                             <span class="detail-label">User ID</span>
-                            <span class="detail-value">${req.user_id}</span>
+                            <span class="detail-value">${escapeHtml(req.user_id)}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Amount</span>
@@ -494,7 +389,7 @@
                 html += `
                     <div class="action-buttons">
                         <button class="approve-btn" onclick="approveWithdrawal('${req.id}', '${req.user_id}', ${req.amount})">✅ Approve</button>
-                        <button class="reject-btn" onclick="rejectWithdrawal('${req.id}')">❌ Reject</button>
+                        <button class="reject-btn" onclick="rejectWithdrawal('${req.id}', '${req.user_id}', ${req.amount})">❌ Reject</button>
                     </div>
                 `
             }
@@ -524,7 +419,18 @@
         }
         
         try {
-            // Get current available balance
+            // Security: Check admin again
+            const { data: { user } } = await supabase.auth.getUser()
+            const { data: adminCheck } = await supabase
+                .from('admins')
+                .select('email')
+                .eq('email', user.email)
+                .single()
+            
+            if (!adminCheck) {
+                throw new Error("Unauthorized access")
+            }
+            
             const { data: earnings } = await supabase
                 .from('user_earnings')
                 .select('available_balance')
@@ -533,7 +439,6 @@
             
             const newBalance = (earnings?.available_balance || 0) - amount
             
-            // Deduct from user's wallet
             await supabase
                 .from('user_earnings')
                 .update({ 
@@ -542,7 +447,6 @@
                 })
                 .eq('user_id', userId)
             
-            // Update withdrawal request status
             await supabase
                 .from('withdrawal_requests')
                 .update({ 
@@ -553,10 +457,11 @@
                 .eq('id', id)
             
             alert(`✅ Withdrawal approved! ₹${amount} deducted from user's wallet.`)
+            loadSummary()
             loadRequests()
             
         } catch (err) {
-            alert("Error processing approval")
+            alert("Error processing approval: " + err.message)
             if (btn) {
                 btn.disabled = false
                 btn.innerHTML = '✅ Approve'
@@ -564,31 +469,66 @@
         }
     }
     
-    window.rejectWithdrawal = async function(id) {
-        if (!confirm("Reject this withdrawal request?")) return
+    window.rejectWithdrawal = async function(id, userId, amount) {
+        if (!confirm("Reject this withdrawal request? Amount will be returned to user's wallet.")) return
         
         const btn = document.querySelector(`#req-${id} .reject-btn`)
+        const approveBtn = document.querySelector(`#req-${id} .approve-btn`)
+        
         if (btn) {
             btn.disabled = true
             btn.innerHTML = '<span class="loading-spinner"></span> Processing...'
         }
+        if (approveBtn) approveBtn.disabled = true
         
         try {
-            // Delete the withdrawal request
+            const { data: { user } } = await supabase.auth.getUser()
+            const { data: adminCheck } = await supabase
+                .from('admins')
+                .select('email')
+                .eq('email', user.email)
+                .single()
+            
+            if (!adminCheck) {
+                throw new Error("Unauthorized access")
+            }
+            
+            const { data: earnings } = await supabase
+                .from('user_earnings')
+                .select('available_balance')
+                .eq('user_id', userId)
+                .single()
+            
+            const newBalance = (earnings?.available_balance || 0) + amount
+            
+            await supabase
+                .from('user_earnings')
+                .update({ 
+                    available_balance: newBalance,
+                    last_updated: new Date().toISOString()
+                })
+                .eq('user_id', userId)
+            
             await supabase
                 .from('withdrawal_requests')
-                .delete()
+                .update({ 
+                    status: 'rejected', 
+                    processed_at: new Date().toISOString(),
+                    notes: 'Rejected by admin, amount returned'
+                })
                 .eq('id', id)
             
-            alert("❌ Withdrawal request rejected and deleted.")
+            alert(`❌ Withdrawal rejected! ₹${amount} returned to user's wallet.`)
+            loadSummary()
             loadRequests()
             
         } catch (err) {
-            alert("Error rejecting request")
+            alert("Error rejecting request: " + err.message)
             if (btn) {
                 btn.disabled = false
                 btn.innerHTML = '❌ Reject'
             }
+            if (approveBtn) approveBtn.disabled = false
         }
     }
     
@@ -602,34 +542,16 @@
         })
     })
     
-    function openMenuOnly() {
-        document.getElementById('menu').classList.add('active')
-        document.getElementById('overlay').classList.add('active')
-        document.body.classList.add('menu-open')
-        document.body.style.top = `-${window.scrollY}px`
-    }
-
-    function closeMenuOnly() {
-        document.getElementById('menu').classList.remove('active')
-        document.getElementById('overlay').classList.remove('active')
-        document.body.classList.remove('menu-open')
-        const scrollY = document.body.style.top
-        document.body.style.top = ''
-        window.scrollTo(0, parseInt(scrollY || '0') * -1)
-    }
-
-    function goToDashboard() {
-        window.location.href = 'dashboard.html'
+    // Initialize
+    async function init() {
+        const isAdmin = await checkAdmin()
+        if (!isAdmin) return
+        
+        await loadSummary()
+        await loadRequests()
     }
     
-    window.confirmLogout = async function() {
-        if (confirm("Are you sure you want to logout?")) {
-            await supabase.auth.signOut()
-            window.location.href = 'login.html'
-        }
-    }
-    
-    checkAdmin().then(() => loadRequests())
+    init()
 </script>
 
 </body>

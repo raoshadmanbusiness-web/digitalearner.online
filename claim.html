@@ -37,85 +37,85 @@
         }
 
         .header-container {
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+            position: relative;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-.header-bg {
-    background: #e0e5ec;
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-    border-radius: 0 0 20px 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    z-index: 1;
-}
+        .header-bg {
+            background: #e0e5ec;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 1;
+        }
 
-.header-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 20px;
-    height: 70px;
-}
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 20px;
+            height: 70px;
+        }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.logo-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    position: relative;
-    top: -3px;
-    left: -10px;
-}
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            top: -3px;
+            left: -10px;
+        }
 
-.brand-text {
-    font-size: 22px;
-    font-weight: 800;
-    color: #1e40af;
-    text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-    white-space: nowrap;
-    position: relative;
-    top: 0px;
-    left: -15px;
-}
+        .brand-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e40af;
+            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            white-space: nowrap;
+            position: relative;
+            top: 0px;
+            left: -15px;
+        }
 
-.menu-btn {
-    width: 40px;
-    height: 40px;
-    background: #e0e5ec;
-    border: none;
-    border-radius: 10px;
-    color: #4f46e5;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-    transition: .2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    top: 0px;
-    right: -8px;
-    z-index: 3;
-    padding: 0;
-}
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #4f46e5;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: 0px;
+            right: -8px;
+            z-index: 3;
+            padding: 0;
+        }
 
-.menu-btn:active {
-    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
-}
+        .menu-btn:active {
+            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+        }
 
         .overlay {
             position: fixed;
@@ -281,11 +281,6 @@
         .form-group input:focus, .form-group select:focus {
             outline: none;
             box-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff;
-        }
-
-        .form-group input.readonly-field {
-            background: #f1f5f9;
-            cursor: default;
         }
 
         .file-upload {
@@ -465,6 +460,28 @@
             cursor: pointer;
             margin-top: 15px;
         }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: #1e293b;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            text-align: center;
+            z-index: 3000;
+            animation: slideUp 0.3s ease;
+            display: none;
+        }
+        .toast-message.success { background: #10b981; }
+        .toast-message.error { background: #ef4444; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -487,8 +504,8 @@
             <a href="about.html" class="menu-link">📖 About Us</a>
         </div>
         <div class="menu-box">
-    <a href="help.html" class="menu-link">📞 Contact Us</a>
-</div>
+            <a href="help.html" class="menu-link">📞 Contact Us</a>
+        </div>
         <div class="menu-box">
             <a href="how-it-works.html" class="menu-link">❓ How It Works</a>
         </div>
@@ -513,18 +530,33 @@
         <div class="claim-sub">Complete your broker registration and submit proof to claim ₹100 bonus</div>
         
         <div class="form-group">
-            <label>Your Full Name</label>
-            <input type="text" id="userName" placeholder="Your name" class="readonly-field" readonly>
+            <label>Your Full Name *</label>
+            <input type="text" id="claimantName" placeholder="Your name">
         </div>
         
         <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" id="userEmail" placeholder="Your email" class="readonly-field" readonly>
+            <label>Your Email Address *</label>
+            <input type="email" id="claimantEmail" placeholder="Your email">
         </div>
         
         <div class="form-group">
-            <label>Mobile Number *</label>
-            <input type="tel" id="userMobile" placeholder="Enter 10-digit mobile number" maxlength="10">
+            <label>Your Mobile Number *</label>
+            <input type="tel" id="claimantMobile" placeholder="Enter 10-digit mobile number" maxlength="10">
+        </div>
+        
+        <div class="form-group">
+            <label>Referred User's Full Name *</label>
+            <input type="text" id="referredName" placeholder="Enter the name of person you referred">
+        </div>
+        
+        <div class="form-group">
+            <label>Referred User's Mobile Number *</label>
+            <input type="tel" id="referredMobile" placeholder="Enter referred person's 10-digit mobile" maxlength="10">
+        </div>
+        
+        <div class="form-group">
+            <label>Referred User's Email *</label>
+            <input type="email" id="referredEmail" placeholder="Enter referred person's email">
         </div>
         
         <div class="form-group">
@@ -571,6 +603,8 @@
     © 2026 Digital Earner · All rights reserved
 </div>
 
+<div id="toastMessage" class="toast-message"></div>
+
 <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
     
@@ -581,6 +615,16 @@
     let selectedFile = null
     let selectedFileData = null
     
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toastMessage')
+        toast.textContent = message
+        toast.className = `toast-message ${type}`
+        toast.style.display = 'block'
+        setTimeout(() => {
+            toast.style.display = 'none'
+        }, 3000)
+    }
+    
     async function protectPage() {
         const { data } = await supabase.auth.getSession()
         if (!data.session) {
@@ -589,32 +633,53 @@
         return data.session
     }
     
-    async function loadUserInfo() {
-        try {
-            const session = await protectPage()
-            if (session) {
-                const user = session.user
-                document.getElementById('userEmail').value = user.email
-                const name = user.user_metadata?.full_name || user.email.split('@')[0]
-                document.getElementById('userName').value = name
-            }
-        } catch (err) {
-            console.error("Load user error:", err)
-        }
-    }
-    
     function validateForm() {
-        const mobile = document.getElementById('userMobile').value.trim()
+        const claimantName = document.getElementById('claimantName').value.trim()
+        const claimantEmail = document.getElementById('claimantEmail').value.trim()
+        const claimantMobile = document.getElementById('claimantMobile').value.trim()
+        const referredName = document.getElementById('referredName').value.trim()
+        const referredMobile = document.getElementById('referredMobile').value.trim()
+        const referredEmail = document.getElementById('referredEmail').value.trim()
         const broker = document.getElementById('brokerName').value
         
-        if (!mobile) {
-            alert("Please enter your mobile number")
-            document.getElementById('userMobile').focus()
+        if (!claimantName) {
+            alert("Please enter your full name")
+            document.getElementById('claimantName').focus()
             return false
         }
-        if (mobile.length !== 10 || !/^[6-9]\d{9}$/.test(mobile)) {
-            alert("Please enter a valid 10-digit Indian mobile number (starts with 6,7,8,9)")
-            document.getElementById('userMobile').focus()
+        if (!claimantEmail) {
+            alert("Please enter your email")
+            document.getElementById('claimantEmail').focus()
+            return false
+        }
+        if (!claimantMobile) {
+            alert("Please enter your mobile number")
+            document.getElementById('claimantMobile').focus()
+            return false
+        }
+        if (claimantMobile.length !== 10 || !/^[6-9]\d{9}$/.test(claimantMobile)) {
+            alert("Please enter a valid 10-digit Indian mobile number")
+            document.getElementById('claimantMobile').focus()
+            return false
+        }
+        if (!referredName) {
+            alert("Please enter referred user's full name")
+            document.getElementById('referredName').focus()
+            return false
+        }
+        if (!referredMobile) {
+            alert("Please enter referred user's mobile number")
+            document.getElementById('referredMobile').focus()
+            return false
+        }
+        if (referredMobile.length !== 10 || !/^[6-9]\d{9}$/.test(referredMobile)) {
+            alert("Please enter a valid 10-digit Indian mobile number for referred user")
+            document.getElementById('referredMobile').focus()
+            return false
+        }
+        if (!referredEmail) {
+            alert("Please enter referred user's email")
+            document.getElementById('referredEmail').focus()
             return false
         }
         if (!broker) {
@@ -693,12 +758,15 @@
         try {
             const session = await protectPage()
             const userId = session.user.id
-            const name = document.getElementById('userName').value.trim()
-            const email = document.getElementById('userEmail').value.trim()
-            const mobile = document.getElementById('userMobile').value.trim()
+            
+            const claimantName = document.getElementById('claimantName').value.trim()
+            const claimantEmail = document.getElementById('claimantEmail').value.trim()
+            const claimantMobile = document.getElementById('claimantMobile').value.trim()
+            const referredName = document.getElementById('referredName').value.trim()
+            const referredMobile = document.getElementById('referredMobile').value.trim()
+            const referredEmail = document.getElementById('referredEmail').value.trim()
             const broker = document.getElementById('brokerName').value
             
-            // Upload screenshot to Supabase Storage
             const screenshotUrl = await uploadScreenshot(userId)
             
             if (!screenshotUrl) {
@@ -708,14 +776,16 @@
                 return
             }
             
-            // Save claim request to database
             const { data: claimData, error: claimError } = await supabase
                 .from('claim_requests')
                 .insert({
                     user_id: userId,
-                    user_name: name,
-                    user_email: email,
-                    user_mobile: mobile,
+                    user_name: claimantName,
+                    user_email: claimantEmail,
+                    user_mobile: claimantMobile,
+                    referred_name: referredName,
+                    referred_mobile: referredMobile,
+                    referred_email: referredEmail,
                     broker_name: broker,
                     proof_screenshot: screenshotUrl,
                     status: 'pending'
@@ -730,12 +800,33 @@
                 return
             }
             
-            // Show success popup
+            // ==================== TELEGRAM NOTIFICATION ====================
+            try {
+                const { data: { user } } = await supabase.auth.getUser()
+                const userName = user.user_metadata?.full_name || user.email.split('@')[0]
+                const requestId = claimData && claimData[0] ? claimData[0].id : 'pending'
+                
+                await supabase.rpc('send_telegram_notification_real', {
+                    p_type: 'claim',
+                    p_user_name: userName,
+                    p_user_email: user.email,
+                    p_broker_name: broker,
+                    p_request_id: requestId.toString()
+                })
+                console.log("Telegram notification sent")
+            } catch (notifyErr) {
+                console.error("Telegram notify error:", notifyErr)
+            }
+            
             const popup = document.getElementById('successPopup')
             popup.classList.add('active')
             
-            // Reset form
-            document.getElementById('userMobile').value = ''
+            document.getElementById('claimantName').value = ''
+            document.getElementById('claimantEmail').value = ''
+            document.getElementById('claimantMobile').value = ''
+            document.getElementById('referredName').value = ''
+            document.getElementById('referredMobile').value = ''
+            document.getElementById('referredEmail').value = ''
             document.getElementById('brokerName').value = ''
             document.getElementById('screenshot').value = ''
             document.getElementById('fileName').innerHTML = ''
@@ -784,6 +875,17 @@
     document.getElementById('backToDashboard').addEventListener('click', function() {
         window.location.href = 'dashboard.html'
     })
+    
+    // Load logged-in user data (name, email)
+    async function loadUserInfo() {
+        const session = await protectPage()
+        if (session) {
+            const user = session.user
+            const name = user.user_metadata?.full_name || user.email.split('@')[0]
+            document.getElementById('claimantName').value = name
+            document.getElementById('claimantEmail').value = user.email
+        }
+    }
     
     loadUserInfo()
 </script>
