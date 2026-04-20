@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Claim Reward - Digital Earner</title>
     <link rel="icon" href="logo.png">
-    
     <style>
         * {
             margin: 0;
@@ -225,7 +224,7 @@
         }
 
         .claim-container {
-            max-width: 450px;
+            max-width: 500px;
             margin: 20px auto;
             padding: 15px 20px;
             display: flex;
@@ -234,28 +233,37 @@
         }
 
         .claim-card {
-            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            background: white;
             border-radius: 28px;
             padding: 25px;
             box-shadow: 0 8px 20px -6px rgba(0,0,0,0.08);
             border-left: 5px solid #f59e0b;
+            transition: transform 0.3s ease;
         }
 
-        .claim-title {
-            font-size: 22px;
-            font-weight: 700;
+        .claim-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
             color: #1e293b;
-            margin-bottom: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #eef2ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .claim-sub {
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 20px;
+        .section-title .emoji {
+            font-size: 22px;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            position: relative;
         }
 
         .form-group label {
@@ -263,38 +271,108 @@
             font-size: 13px;
             font-weight: 600;
             color: #334155;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+        }
+
+        .form-group label .required {
+            color: #ef4444;
+            margin-left: 4px;
         }
 
         .form-group input, .form-group select {
             width: 100%;
             padding: 14px 16px;
-            border: none;
+            border: 1px solid #e2e8f0;
             border-radius: 18px;
             font-size: 14px;
-            background: #e0e5ec;
-            box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
-            transition: 0.3s;
+            background: white;
+            transition: all 0.3s ease;
             font-family: inherit;
         }
 
         .form-group input:focus, .form-group select:focus {
             outline: none;
-            box-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-group input.error, .form-group select.error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .form-group input.readonly-field {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+            color: #1e293b;
+            font-weight: 500;
+            cursor: default;
+        }
+
+        .error-text {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .error-text.show {
+            display: flex;
+        }
+
+        .error-text::before {
+            content: "⚠️";
+            font-size: 12px;
+        }
+
+        .email-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            margin-top: 5px;
+            padding: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 10;
+            display: none;
+            border: 1px solid #e2e8f0;
+        }
+
+        .email-suggestions.show {
+            display: block;
+        }
+
+        .suggestion-item {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 4px 0;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1a237e;
+            font-weight: 500;
+        }
+
+        .suggestion-item:hover {
+            background: #f1f5f9;
         }
 
         .file-upload {
-            background: #e0e5ec;
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
             border-radius: 18px;
-            padding: 20px;
+            padding: 24px;
             text-align: center;
             cursor: pointer;
-            box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
-            transition: 0.2s;
+            transition: all 0.3s ease;
         }
 
         .file-upload:hover {
-            box-shadow: inset 6px 6px 12px #a3b1c6, inset -6px -6px 12px #ffffff;
+            border-color: #4f46e5;
+            background: #f1f5f9;
         }
 
         .upload-icon {
@@ -304,15 +382,16 @@
         }
 
         .file-upload p {
-            font-size: 12px;
+            font-size: 13px;
             color: #64748b;
         }
 
         #fileName {
-            font-size: 11px;
+            font-size: 12px;
             color: #10b981;
             margin-top: 8px;
             text-align: center;
+            font-weight: 500;
         }
 
         .submit-btn {
@@ -325,45 +404,51 @@
             font-weight: 700;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            transition: all 0.3s ease;
             margin-top: 10px;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
         }
 
         .submit-btn:active {
-            transform: scale(0.98);
-            box-shadow: inset 3px 3px 6px #a3b1c6, inset -3px -3px 6px #ffffff;
+            transform: translateY(0);
+            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
         }
 
         .submit-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
 
-        .success-popup {
+        .success-popup, .error-popup {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
             background: white;
             border-radius: 28px;
-            padding: 30px;
+            padding: 32px;
             width: 320px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.2);
             z-index: 2000;
             opacity: 0;
             visibility: hidden;
             transition: 0.3s;
         }
 
-        .success-popup.active {
+        .success-popup.active, .error-popup.active {
             opacity: 1;
             visibility: visible;
             transform: translate(-50%, -50%) scale(1);
         }
 
-        .success-popup .icon {
+        .success-popup .icon, .error-popup .icon {
             font-size: 60px;
             margin-bottom: 15px;
         }
@@ -375,7 +460,7 @@
             margin-bottom: 8px;
         }
 
-        .success-popup p {
+        .success-popup p, .error-popup p {
             font-size: 14px;
             color: #64748b;
             margin-bottom: 20px;
@@ -383,6 +468,16 @@
 
         .success-popup button {
             background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .error-popup button {
+            background: #ef4444;
             color: white;
             border: none;
             padding: 12px 30px;
@@ -409,58 +504,13 @@
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-right: 8px;
+            vertical-align: middle;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        
-        .error-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
-            background: white;
-            border-radius: 28px;
-            padding: 30px;
-            width: 320px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-        }
-        
-        .error-popup.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
-        
-        .error-popup .icon {
-            font-size: 60px;
-            margin-bottom: 15px;
-        }
-        
-        .error-popup h3 {
-            font-size: 22px;
-            font-weight: 700;
-            color: #dc2626;
-            margin-bottom: 8px;
-        }
-        
-        .error-popup button {
-            background: #dc2626;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-        
+
         .toast-message {
             position: fixed;
             bottom: 30px;
@@ -468,16 +518,19 @@
             right: 20px;
             background: #1e293b;
             color: white;
-            padding: 12px 20px;
+            padding: 14px 20px;
             border-radius: 50px;
             font-size: 14px;
             text-align: center;
             z-index: 3000;
             animation: slideUp 0.3s ease;
             display: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
+
         .toast-message.success { background: #10b981; }
         .toast-message.error { background: #ef4444; }
+
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(50px); }
             to { opacity: 1; transform: translateY(0); }
@@ -526,41 +579,52 @@
 <div class="claim-container">
     
     <div class="claim-card">
-        <div class="claim-title">🎁 Claim Your Reward</div>
-        <div class="claim-sub">Complete your broker registration and submit proof to claim ₹100 bonus</div>
-        
+        <div class="section-title">
+            <span class="emoji">👤</span>
+            Your Details (Claimant)
+        </div>
         <div class="form-group">
-            <label>Your Full Name *</label>
-            <input type="text" id="claimantName" placeholder="Your name">
+            <label>Full Name</label>
+            <input type="text" id="claimantName" class="readonly-field" readonly>
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="claimantEmail" class="readonly-field" readonly>
+        </div>
+        <div class="form-group">
+            <label>Mobile Number</label>
+            <input type="tel" id="claimantMobile" class="readonly-field" readonly>
+        </div>
+    </div>
+
+    <div class="claim-card">
+        <div class="section-title">
+            <span class="emoji">🎯</span>
+            Referred User Details
+            <span style="font-size: 11px; font-weight: normal; color:#64748b;">(जिसके लिए claim कर रहे हो)</span>
         </div>
         
         <div class="form-group">
-            <label>Your Email Address *</label>
-            <input type="email" id="claimantEmail" placeholder="Your email">
+            <label>Referred User's Full Name <span class="required">*</span></label>
+            <input type="text" id="referredName" placeholder="Enter name of person you referred">
+            <div id="referredNameError" class="error-text"></div>
+        </div>
+        
+        <div class="form-group" style="position: relative;">
+            <label>Referred User's Email <span class="required">*</span></label>
+            <input type="email" id="referredEmail" placeholder="Enter referred person's email" autocomplete="off">
+            <div id="referredEmailError" class="error-text"></div>
+            <div class="email-suggestions" id="emailSuggestions"></div>
         </div>
         
         <div class="form-group">
-            <label>Your Mobile Number *</label>
-            <input type="tel" id="claimantMobile" placeholder="Enter 10-digit mobile number" maxlength="10">
+            <label>Referred User's Mobile Number <span class="required">*</span></label>
+            <input type="tel" id="referredMobile" placeholder="10-digit mobile number" maxlength="10">
+            <div id="referredMobileError" class="error-text"></div>
         </div>
         
         <div class="form-group">
-            <label>Referred User's Full Name *</label>
-            <input type="text" id="referredName" placeholder="Enter the name of person you referred">
-        </div>
-        
-        <div class="form-group">
-            <label>Referred User's Mobile Number *</label>
-            <input type="tel" id="referredMobile" placeholder="Enter referred person's 10-digit mobile" maxlength="10">
-        </div>
-        
-        <div class="form-group">
-            <label>Referred User's Email *</label>
-            <input type="email" id="referredEmail" placeholder="Enter referred person's email">
-        </div>
-        
-        <div class="form-group">
-            <label>Broker Name *</label>
+            <label>Broker Name <span class="required">*</span></label>
             <select id="brokerName">
                 <option value="">Select Broker</option>
                 <option value="Angel One">Angel One</option>
@@ -568,16 +632,18 @@
                 <option value="5Paisa">5Paisa</option>
                 <option value="m.Stock">m.Stock</option>
             </select>
+            <div id="brokerError" class="error-text"></div>
         </div>
         
         <div class="form-group">
-            <label>Screenshot Proof *</label>
+            <label>Screenshot Proof <span class="required">*</span></label>
             <div class="file-upload" onclick="document.getElementById('screenshot').click()">
                 <span class="upload-icon">📸 ➕</span>
-                <p>Click to upload screenshot</p>
+                <p>Click to upload screenshot (JPG, PNG, max 2MB)</p>
             </div>
-            <input type="file" id="screenshot" accept="image/*" style="display:none" onchange="showFileName()">
+            <input type="file" id="screenshot" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none" onchange="showFileName()">
             <div id="fileName"></div>
+            <div id="screenshotError" class="error-text"></div>
         </div>
         
         <button class="submit-btn" id="submitBtn">Submit Claim →</button>
@@ -585,10 +651,14 @@
     
 </div>
 
+<div class="footer">
+    © 2026 Digital Earner · All rights reserved
+</div>
+
 <div class="success-popup" id="successPopup">
     <div class="icon">✅</div>
     <h3>Claim Submitted!</h3>
-    <p>Your claim has been submitted successfully. Admin will verify within 24 hours.</p>
+    <p>Your claim has been submitted successfully.<br>Admin will verify within 24 hours.</p>
     <button id="okBtn">OK</button>
 </div>
 
@@ -597,10 +667,6 @@
     <h3>Submission Failed</h3>
     <p id="errorMessage">Something went wrong. Please try again.</p>
     <button id="errorOkBtn">Try Again</button>
-</div>
-
-<div class="footer">
-    © 2026 Digital Earner · All rights reserved
 </div>
 
 <div id="toastMessage" class="toast-message"></div>
@@ -613,7 +679,8 @@
     const supabase = createClient(supabaseUrl, supabaseKey)
     
     let selectedFile = null
-    let selectedFileData = null
+    
+    const domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'rediffmail.com']
     
     function showToast(message, type = 'success') {
         const toast = document.getElementById('toastMessage')
@@ -625,6 +692,26 @@
         }, 3000)
     }
     
+    function showFieldError(fieldId, errorId, message) {
+        const field = document.getElementById(fieldId)
+        const error = document.getElementById(errorId)
+        field.classList.add('error')
+        error.textContent = message
+        error.classList.add('show')
+        
+        field.addEventListener('input', function() {
+            field.classList.remove('error')
+            error.classList.remove('show')
+        }, { once: true })
+    }
+    
+    function clearFieldError(fieldId, errorId) {
+        const field = document.getElementById(fieldId)
+        const error = document.getElementById(errorId)
+        field.classList.remove('error')
+        error.classList.remove('show')
+    }
+    
     async function protectPage() {
         const { data } = await supabase.auth.getSession()
         if (!data.session) {
@@ -634,87 +721,64 @@
     }
     
     function validateForm() {
-        const claimantName = document.getElementById('claimantName').value.trim()
-        const claimantEmail = document.getElementById('claimantEmail').value.trim()
-        const claimantMobile = document.getElementById('claimantMobile').value.trim()
+        let isValid = true
+        
         const referredName = document.getElementById('referredName').value.trim()
         const referredMobile = document.getElementById('referredMobile').value.trim()
         const referredEmail = document.getElementById('referredEmail').value.trim()
         const broker = document.getElementById('brokerName').value
         
-        if (!claimantName) {
-            alert("Please enter your full name")
-            document.getElementById('claimantName').focus()
-            return false
-        }
-        if (!claimantEmail) {
-            alert("Please enter your email")
-            document.getElementById('claimantEmail').focus()
-            return false
-        }
-        if (!claimantMobile) {
-            alert("Please enter your mobile number")
-            document.getElementById('claimantMobile').focus()
-            return false
-        }
-        if (claimantMobile.length !== 10 || !/^[6-9]\d{9}$/.test(claimantMobile)) {
-            alert("Please enter a valid 10-digit Indian mobile number")
-            document.getElementById('claimantMobile').focus()
-            return false
-        }
         if (!referredName) {
-            alert("Please enter referred user's full name")
-            document.getElementById('referredName').focus()
-            return false
+            showFieldError('referredName', 'referredNameError', 'Please enter referred user\'s full name')
+            isValid = false
         }
-        if (!referredMobile) {
-            alert("Please enter referred user's mobile number")
-            document.getElementById('referredMobile').focus()
-            return false
-        }
-        if (referredMobile.length !== 10 || !/^[6-9]\d{9}$/.test(referredMobile)) {
-            alert("Please enter a valid 10-digit Indian mobile number for referred user")
-            document.getElementById('referredMobile').focus()
-            return false
-        }
+        
         if (!referredEmail) {
-            alert("Please enter referred user's email")
-            document.getElementById('referredEmail').focus()
-            return false
+            showFieldError('referredEmail', 'referredEmailError', 'Please enter referred user\'s email')
+            isValid = false
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(referredEmail)) {
+            showFieldError('referredEmail', 'referredEmailError', 'Please enter a valid email address')
+            isValid = false
         }
+        
+        if (!referredMobile) {
+            showFieldError('referredMobile', 'referredMobileError', 'Please enter referred user\'s mobile number')
+            isValid = false
+        } else if (!/^[6-9]\d{9}$/.test(referredMobile)) {
+            showFieldError('referredMobile', 'referredMobileError', 'Enter a valid 10-digit Indian mobile number (starts with 6,7,8,9)')
+            isValid = false
+        }
+        
         if (!broker) {
-            alert("Please select a broker")
-            document.getElementById('brokerName').focus()
-            return false
+            showFieldError('brokerName', 'brokerError', 'Please select a broker')
+            isValid = false
         }
+        
         if (!selectedFile) {
-            alert("Please upload screenshot proof")
-            return false
+            showFieldError('screenshot', 'screenshotError', 'Please upload screenshot proof')
+            isValid = false
         }
-        return true
+        
+        return isValid
     }
     
     window.showFileName = function() {
         const file = document.getElementById('screenshot').files[0]
+        clearFieldError('screenshot', 'screenshotError')
+        
         if (file) {
             if (file.size > 2 * 1024 * 1024) {
-                alert("File size should be less than 2MB")
+                showToast("File size should be less than 2MB", "error")
                 document.getElementById('screenshot').value = ''
                 return
             }
             if (!file.type.startsWith('image/')) {
-                alert("Please upload an image file")
+                showToast("Please upload an image file (JPG, PNG, GIF, WEBP)", "error")
                 document.getElementById('screenshot').value = ''
                 return
             }
             selectedFile = file
             document.getElementById('fileName').innerHTML = `✅ ${file.name}`
-            
-            const reader = new FileReader()
-            reader.onload = function(e) {
-                selectedFileData = e.target.result
-            }
-            reader.readAsDataURL(file)
         }
     }
     
@@ -747,6 +811,61 @@
         errorMessage.textContent = message
         errorPopup.classList.add('active')
     }
+    
+    const emailInput = document.getElementById('referredEmail')
+    const suggestionsBox = document.getElementById('emailSuggestions')
+    
+    emailInput.addEventListener('input', function() {
+        const value = this.value
+        const atIndex = value.indexOf('@')
+        
+        if (atIndex !== -1) {
+            const localPart = value.substring(0, atIndex)
+            const domainPart = value.substring(atIndex + 1)
+            
+            if (domainPart.length === 0) {
+                suggestionsBox.innerHTML = ''
+                const div = document.createElement('div')
+                div.className = 'suggestion-item'
+                div.textContent = localPart + '@gmail.com'
+                div.onclick = () => {
+                    emailInput.value = localPart + '@gmail.com'
+                    suggestionsBox.classList.remove('show')
+                    clearFieldError('referredEmail', 'referredEmailError')
+                }
+                suggestionsBox.appendChild(div)
+                suggestionsBox.classList.add('show')
+            } else {
+                const matchedDomains = domains.filter(d => d.startsWith(domainPart))
+                
+                if (matchedDomains.length > 0) {
+                    suggestionsBox.innerHTML = ''
+                    matchedDomains.forEach(domain => {
+                        const div = document.createElement('div')
+                        div.className = 'suggestion-item'
+                        div.textContent = localPart + '@' + domain
+                        div.onclick = () => {
+                            emailInput.value = localPart + '@' + domain
+                            suggestionsBox.classList.remove('show')
+                            clearFieldError('referredEmail', 'referredEmailError')
+                        }
+                        suggestionsBox.appendChild(div)
+                    })
+                    suggestionsBox.classList.add('show')
+                } else {
+                    suggestionsBox.classList.remove('show')
+                }
+            }
+        } else {
+            suggestionsBox.classList.remove('show')
+        }
+    })
+    
+    document.addEventListener('click', function(e) {
+        if (!emailInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+            suggestionsBox.classList.remove('show')
+        }
+    })
     
     window.submitClaim = async function() {
         if (!validateForm()) return
@@ -800,7 +919,6 @@
                 return
             }
             
-            // ==================== TELEGRAM NOTIFICATION ====================
             try {
                 const { data: { user } } = await supabase.auth.getUser()
                 const userName = user.user_metadata?.full_name || user.email.split('@')[0]
@@ -821,9 +939,6 @@
             const popup = document.getElementById('successPopup')
             popup.classList.add('active')
             
-            document.getElementById('claimantName').value = ''
-            document.getElementById('claimantEmail').value = ''
-            document.getElementById('claimantMobile').value = ''
             document.getElementById('referredName').value = ''
             document.getElementById('referredMobile').value = ''
             document.getElementById('referredEmail').value = ''
@@ -831,7 +946,6 @@
             document.getElementById('screenshot').value = ''
             document.getElementById('fileName').innerHTML = ''
             selectedFile = null
-            selectedFileData = null
             
             btn.disabled = false
             btn.innerHTML = 'Submit Claim →'
@@ -845,11 +959,9 @@
     }
     
     document.getElementById('submitBtn').addEventListener('click', window.submitClaim)
-    
     document.getElementById('okBtn').addEventListener('click', function() {
         window.location.href = 'dashboard.html'
     })
-    
     document.getElementById('errorOkBtn').addEventListener('click', function() {
         document.getElementById('errorPopup').classList.remove('active')
     })
@@ -876,14 +988,16 @@
         window.location.href = 'dashboard.html'
     })
     
-    // Load logged-in user data (name, email)
     async function loadUserInfo() {
         const session = await protectPage()
         if (session) {
             const user = session.user
             const name = user.user_metadata?.full_name || user.email.split('@')[0]
+            const mobile = user.user_metadata?.mobile || ''
+            
             document.getElementById('claimantName').value = name
             document.getElementById('claimantEmail').value = user.email
+            document.getElementById('claimantMobile').value = mobile
         }
     }
     
