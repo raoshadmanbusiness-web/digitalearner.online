@@ -924,17 +924,19 @@
                 const requestId = claimData && claimData[0] ? claimData[0].id : 'pending'
          
                  supabase.rpc('send_telegram_notification_real', {
-    p_type: 'claim',
-    p_user_name: claimantName,
-    p_user_email: claimantEmail,
-    p_user_mobile: claimantMobile,
-    p_referred_name: referredName,
-    p_referred_email: referredEmail,
-    p_referred_mobile: referredMobile,
-    p_broker_name: broker,
-    p_request_id: requestId.toString(),
-    p_manage_link: 'https://raoshadmanbusiness-web.github.io/shadman/admin-claims.html'
-})
+        p_type: 'claim',
+        p_user_name: claimantName,
+        p_user_email: claimantEmail,
+        p_user_mobile: claimantMobile,
+        p_referred_name: referredName,
+        p_referred_email: referredEmail,
+        p_referred_mobile: referredMobile,
+        p_broker_name: broker,
+        p_request_id: requestId.toString(),
+        p_manage_link: 'https://raoshadmanbusiness-web.github.io/shadman/admin-claims.html'
+    }).then(res => console.log("Telegram Result:", res))
+    .catch(err => console.log("Telegram Error:", err))
+    
                 console.log("Telegram notification sent")
             } catch (notifyErr) {
                 console.error("Telegram notify error:", notifyErr)
