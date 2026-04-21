@@ -922,8 +922,8 @@
             try {
                
                 const requestId = claimData && claimData[0] ? claimData[0].id : 'pending'
-                
-                await supabase.rpc('send_telegram_notification_real', {
+         
+                 supabase.rpc('send_telegram_notification_real', {
     p_type: 'claim',
     p_user_name: claimantName,
     p_user_email: claimantEmail,
