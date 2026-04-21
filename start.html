@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Redirecting...</title>
+<style>
+body{
+font-family:Arial,sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:#f8fafc;
+margin:0;
+}
+.box{
+text-align:center;
+padding:25px;
+background:white;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+width:90%;
+max-width:320px;
+}
+.loader{
+width:45px;
+height:45px;
+border:4px solid #ddd;
+border-top:4px solid #10b981;
+border-radius:50%;
+margin:auto;
+animation:spin 1s linear infinite;
+}
+@keyframes spin{
+100%{transform:rotate(360deg)}
+}
+h2{font-size:20px;margin-top:18px;}
+p{font-size:13px;color:#666;}
+</style>
+</head>
+<body>
+
+<div class="box">
+<div class="loader"></div>
+<h2>Redirecting...</h2>
+<p>Please wait</p>
+</div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+
+const supabaseUrl = "https://yqxbwgxfhibbdkgglydw.supabase.co"
+const supabaseKey = "sb_publishable_2yjmy16CcD7Vtn5ydaYkfw_b4CJyz2V"
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+const params = new URLSearchParams(window.location.search)
+
+const ref = params.get("ref")
+const broker = decodeURIComponent(params.get("broker") || "")
+
+const links = {
+ "Angel One":"https://angel-one.onelink.me/Wjgr/v0w9h00a",
+ "Upstox":"https://upstox.onelink.me/0H1s/6CANE4",
+ "5Paisa":"https://5paisa.page.link/srJu6M7daAtcRXzLA",
+ "m.Stock":"https://mstock.onelink.me/CX05/56h6ow03"
+}
+
+async function startProcess(){
+
+if(!ref || !broker){
+window.location.href="index.html"
+return
+}
+
+if(!links[broker]){
+window.location.href="index.html"
+return
+}
+
+const visitorKey =
+localStorage.getItem("visitor_id") || crypto.randomUUID()
+
+localStorage.setItem("visitor_id", visitorKey)
+
+const { data, error } = await supabase
+.from("referrals")
+.select("id")
+.eq("referrer_id", ref)
+.eq("broker_name", broker)
+.eq("visitor_id", visitorKey)
+.maybeSingle()
+
+if(error){
+console.log("Check error:", error)
+}
+
+if(!data){
+
+try{
+await supabase
+.from("referrals")
+.insert({
+referrer_id: ref,
+broker_name: broker,
+visitor_id: visitorKey,
+referral_link: links[broker],
+status: "pending"
+})
+}catch(err){
+console.log(err)
+}
+
+}
+
+setTimeout(()=>{
+window.location.href = links[broker] || "index.html"
+},1200)
+
+}
+
+startProcess()
+</script>
+
+</body>
+</html>

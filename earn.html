@@ -36,87 +36,86 @@
             height: 100%;
         }
 
-        /* ==================== HEADER (Index.html जैसा) ==================== */
-.header-container {
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
+        .header-container {
+            position: relative;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-.header-bg {
-    background: #e0e5ec;
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-    border-radius: 0 0 20px 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    z-index: 1;
-}
+        .header-bg {
+            background: #e0e5ec;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            border-radius: 0 0 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            z-index: 1;
+        }
 
-.header-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 20px;
-    height: 70px;
-}
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 20px;
+            height: 70px;
+        }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.logo-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    position: relative;
-    top: -3px;
-    left: -10px;
-}
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            top: -3px;
+            left: -10px;
+        }
 
-.brand-text {
-    font-size: 22px;
-    font-weight: 800;
-    color: #1e40af;
-    text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
-    white-space: nowrap;
-    position: relative;
-    top: 0px;
-    left: -15px;
-}
+        .brand-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e40af;
+            text-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #ffffff;
+            white-space: nowrap;
+            position: relative;
+            top: 0px;
+            left: -15px;
+        }
 
-.menu-btn {
-    width: 40px;
-    height: 40px;
-    background: #e0e5ec;
-    border: none;
-    border-radius: 10px;
-    color: #4f46e5;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
-    transition: .2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    top: 0px;
-    right: -8px;
-    z-index: 3;
-    padding: 0;
-}
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 10px;
+            color: #4f46e5;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #ffffff;
+            transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: 0px;
+            right: -8px;
+            z-index: 3;
+            padding: 0;
+        }
 
-.menu-btn:active {
-    box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
-}
+        .menu-btn:active {
+            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+        }
 
         .overlay {
             position: fixed;
@@ -368,6 +367,32 @@
             margin-top: 30px;
             font-size: 12px;
         }
+
+        /* Progress Grid Styles */
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .progress-item {
+            background: #f8fafc;
+            padding: 14px 10px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: inset 3px 3px 8px #d1d5db, inset -3px -3px 8px #ffffff;
+        }
+        .progress-label {
+            font-size: 12px;
+            color: #64748b;
+        }
+        .progress-number {
+            font-size: 22px;
+            font-weight: 800;
+        }
+        .progress-number.pending { color: #f59e0b; }
+        .progress-number.success { color: #10b981; }
+        .progress-number.reject { color: #ef4444; }
     </style>
 </head>
 <body>
@@ -410,6 +435,30 @@
 </div>
 
 <div class="earn-container">
+    
+    <!-- 📊 Referral Progress Box -->
+    <div class="referral-card" style="cursor:default; border-left:5px solid #10b981;">
+        <div class="card-header">
+            <div class="card-icon" style="background:linear-gradient(135deg,#10b981,#059669);">
+                📊
+            </div>
+            <h3>My Referral Progress</h3>
+        </div>
+        <div class="progress-grid">
+            <div class="progress-item">
+                <div class="progress-label">Pending</div>
+                <div id="pendingCount" class="progress-number pending">0</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-label">Successful</div>
+                <div id="successCount" class="progress-number success">0</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-label">Rejected</div>
+                <div id="rejectCount" class="progress-number reject">0</div>
+            </div>
+        </div>
+    </div>
     
     <div class="referral-card">
         <div class="card-header">
@@ -502,6 +551,29 @@
         }
     }
     
+    async function loadReferralStats() {
+        const session = await protectPage()
+        if (!session) return
+        
+        const { data: referrals, error } = await supabase
+            .from('referrals')
+            .select('status')
+            .eq('referrer_id', session.user.id)
+        
+        if (error) {
+            console.error("Error loading referral stats:", error)
+            return
+        }
+        
+        const pending = referrals?.filter(r => r.status === 'pending').length || 0
+        const success = referrals?.filter(r => r.status === 'success').length || 0
+        const rejected = referrals?.filter(r => r.status === 'rejected').length || 0
+        
+        document.getElementById('pendingCount').textContent = pending
+        document.getElementById('successCount').textContent = success
+        document.getElementById('rejectCount').textContent = rejected
+    }
+    
     async function trackReferral(brokerName, originalLink) {
         const { data: { user } } = await supabase.auth.getUser()
         if (!user) return false
@@ -520,6 +592,9 @@
                 console.error("Track error:", error)
                 return false
             }
+            
+            // Refresh stats after tracking
+            loadReferralStats()
             return true
         } catch (err) {
             console.error("Track error:", err)
@@ -608,6 +683,7 @@
     
     setTimeout(updateNotification, 5000)
     loadUserName()
+    loadReferralStats()
     
     const menu = document.getElementById('menu')
     const overlay = document.getElementById('overlay')
